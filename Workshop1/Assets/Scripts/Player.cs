@@ -1,9 +1,25 @@
 ﻿using UnityEngine;
 
-public class Player : MonoBehaviour
+public sealed class Player : MonoBehaviour
 {
+    public static Player main { get; private set; }
+
+    void Start()
+    {
+        main = this;
+    }
+
+    [Header("Setup")]
     [SerializeField] private CharacterController controller;
-    [SerializeField] private float speed; 
+    [SerializeField] private float speed;
+
+    [Header("Health")]
+    [SerializeField] public float maxHealth;
+    [SerializeField] public float health;
+
+    [Header("Mana")]
+    [SerializeField] public float maxMana;
+    [SerializeField] public float mana;
 
     void Update()
     {
