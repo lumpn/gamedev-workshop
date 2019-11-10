@@ -58,11 +58,11 @@ public sealed class HealthBar : MonoBehaviour
 }
 ```
 
-![Health bar](/Workshop1/Documentation/HealthBar.png "Brilliant!")
+![Health bar](./Documentation/HealthBar.png "Brilliant!")
 
 Done. So easy. Let's move on to the [next task](https://www.reddit.com/r/restofthefuckingowl/). Soon enough we will have added inventory, equipment, items, gems, sockets, talent tree, character stats, spell book, buffs, and enemies to the game, and they all have to talk to each other. So we introduce more singletons. Piece of cake!
 
-![Dependency graph](/Workshop1/Documentation/Dependencies.png "Ship it!")
+![Dependency graph](./Documentation/Dependencies.png "Ship it!")
 
 Okay, perhaps not so easy anymore. It is then, that our game designer comes up with this new spell which doubles the character attribute effects of each equipped piece of armor. Oh, and also this new berserk buff which times out within 20 seconds unless the player keeps killing enemies. We cry a little on the inside and add more singletons. By the time we receive yet another bug report about character stats not resetting properly once a combination of buff times out we're ready to quit our job to become baristas instead.
 
@@ -99,7 +99,7 @@ public sealed class HealthBar : MonoBehaviour
 }
 ```
 
-![Health bar version 2](/Workshop1/Documentation/HealthBar2.png "Did we gain anything though?")
+![Health bar version 2](./Documentation/HealthBar2.png "Did we gain anything though?")
 
 Okay, so we replaced the singleton with an injected reference to the player component. Great. High fives all around! Except... did we really gain anything? Let's evaluate against our problem definition.
 
@@ -151,11 +151,11 @@ public sealed class Player : MonoBehaviour
 }
 ```
 
-![ScriptableObjects](/Workshop1/Documentation/ScriptableObjects.png "Yes, you can open multiple inspector windows.")
+![ScriptableObjects](./Documentation/ScriptableObjects.png "Yes, you can open multiple inspector windows.")
 
 We move all the *data* into *data containers* and reference them from our components. `ScriptableObject`s live in the assets folder and can be referenced from any prefab, any instance, in any scene. We also unify the code for our health bar and our mana bar, because all they really care about is a maximum value and a value. Nothing in UI references our `Player` anymore and vice versa. Both just reference *data*. They don't even care whether it's the same data.
 
-![Decoupling](/Workshop1/Documentation/Decoupling.png)
+![Decoupling](./Documentation/Decoupling.png)
 
 Are we there yet? Let's evaluate again against our problem definition.
 
