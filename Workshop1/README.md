@@ -72,7 +72,7 @@ How about let's not do that. What if I told you, each component can be isolated,
 
 So we start reading about [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection), [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns), and [inversion of control](https://en.wikipedia.org/wiki/Inversion_of_control), and it's a lot of talk and seems really complicated and we have to download extra frameworks to make it work or switch to a new language (hah, hah, *sigh*).
 
-The key insight here is that the [inspector in Unity](https://docs.unity3d.com/Manual/UsingTheInspector.html) *is* a dependency injector. In fact, we've already been using it to inject dependencies. In the example above the `HealthBar` component's reference to the UI `Slider` *is* a dependency that we *injected* using the inspector. Crazy, right? But that's really all there is to dependency injection.
+The key insight here is that the [inspector in Unity](https://docs.unity3d.com/Manual/UsingTheInspector.html) *is* a dependency injector. In fact, we've already been using it to inject dependencies. In the [example above](#singletons) the `HealthBar` component's reference to the UI `Slider` *is* a dependency that we *injected* using the inspector. Crazy, right? But that's really all there is to dependency injection.
 
 ```csharp
 public sealed class Player : MonoBehaviour
