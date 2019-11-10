@@ -77,6 +77,9 @@ The key insight here is that the [inspector in Unity](https://docs.unity3d.com/M
 ```csharp
 public sealed class Player : MonoBehaviour
 {
+    public float maxHealth;
+    public float health;
+    
     // Look ma, no singleton!
     // ...
 }
@@ -104,16 +107,71 @@ Okay, so we replaced the singleton with an injected reference to the player comp
 - [ ] Test individual components in isolation
 - [ ] Reuse individual components
 
-Not much improvement, really. We can kind of guess what `HealthBar` does without looking at `Player`, but we can't test it in an empty new scene without also putting a `Player` into the scene. We also can't reuse the code for our `ManaBar`. We will have to duplicate the code and replace every `health` with `mana` to make it work. Disappointing.
+Not much improvement, really. We can kind of guess what `HealthBar` does without looking at `Player`, but we can't test it in an empty scene without also putting a `Player` into the scene. We also can't reuse the code for our `ManaBar`. We will have to duplicate the code and replace every `health` with `mana` to make it work. Disappointing.
 
 Later we want to clean things up a bit by moving our UI into its own scene which gets loaded additively. How do we even connect the `HealthBar` to the `Player` now? They are in different scenes! We're fed up with dependency injection and ready to throw it on the pile of useless ideas that only sound good in theory.
 
-### Scriptable objects
+### ScriptableObjects
 
 Today's second insight is that we can inject not only references to other components, but also to `ScriptableObject`s, which are [data containers we can use to save data, *independent of class instances*](https://docs.unity3d.com/Manual/class-ScriptableObject.html). Does that mean we can store the player's health independent of the `Player` component? It does! Does that mean we can reference the player's health independent of the `Player` component? It does too! Let's take it for a spin.
 
-TODO scriptable object code
+```csharp
+[CreateAssetMenu]
+public sealed class BoundedFloat : ScriptableObject
+{
+    public float maxValue;
+    public float value;
+}
+```
+
+```csharp
+public sealed class ProgressBar : MonoBehaviour
+{
+    [SerializeField] private Slider slider;
+    [SerializeField] private BoundedFloat data;
+
+    void Update()
+    {
+        slider.maxValue = data.maxValue;
+        slider.value = data.value;
+    }
+}
+```
+
+```csharp
+public sealed class Player : MonoBehaviour
+{
+    [Header("Stats")]
+    [SerializeField] private BoundedFloat health;
+    [SerializeField] private BoundedFloat mana;
+    
+    // ...
+}
+```
+
+![ScriptableObjects](/Workshop1/Documentation/ScriptableObjects.png "Yes, you can open multiple inspector windows.")
+
+So we moved all the *data* into *data containers* and referenced them from our components. `ScriptableObject`s live in the assets folder and can be referenced from any prefab, any instance, and any scene. We were also able to unify the code for our health bar and our mana bar, because all they really care about is a maximum value and a value. Nothing in UI references our `Player` anymore and vice versa, both just reference *data*. They don't even care whether it's the same data.
+
+![Decoupling](/Workshop1/Documentation/Decoupling.png)
+
+Are we there yet? Let's evaluate again against our problem definition.
+
+- [x] Reason about individual components in isolation
+- [x] Test individual components in isolation
+- [x] Reuse individual components
+
+Reading the code, we can understand what the `Player` does without reading what the UI's `ProgressBar`s do and vice versa. There is no dependency between the two. We can throw the `Player` into an empty scene, hook it up to some [fake health and mana data](https://en.wikipedia.org/wiki/Mock_object), and run that. No problem. Plain old data is easy to clone.
+
+We can also throw the UI into an empty scene, hook it up to some fake data, and run that. We can even animate the values of our fake data and see how the health and mana bars change. Our UI designer can go nuts prettying it up without ever having to run the actual game. Iterating on UI design has never been faster!
+
+We haven't even started implementing all the other components for our game, but we're already reusing code. We only need one script for both bars and we have a feeling that our `BoundedFloat` will come in handy for lots of other stats and attributes in the future.
 
 ## Refactoring
 
-You don't even have to start over. You can gradually refactor your project to 
+One beautiful thing about dependency injection is that we can apply it to existing projects as well. We don't have to start over. We can gradually carve out individual components by moving data into `ScriptableObject`s and replace direct references between components with references to data step by step. Once we have completely decoupled one component, we can test and refactor it easily in isolation.
+
+## Further reading
+
+- [Unite Austin 2017 - Game Architecture with Scriptable Objects](https://youtu.be/raQ3iHhE_Kk) by @roboryantron
+- [Unite 2016 - Overthrowing the MonoBehaviour Tyranny in a Glorious Scriptable Object Revolution](https://youtu.be/6vmRwLYWNRo) by @richard-fine
