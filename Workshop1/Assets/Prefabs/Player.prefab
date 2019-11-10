@@ -221,10 +221,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 9047061913790646996}
   speed: 10
-  maxHealth: 80
-  health: 80
-  maxMana: 40
-  mana: 30
+  health: {fileID: 11400000, guid: a3b5cacc10e52cb4dacf477ac19a07cb, type: 2}
+  mana: {fileID: 11400000, guid: 560495f8111f5724da5599562e0eedec, type: 2}
 --- !u!1 &8433657621023297109
 GameObject:
   m_ObjectHideFlags: 0

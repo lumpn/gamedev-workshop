@@ -6,9 +6,9 @@ public sealed class Player : MonoBehaviour
     [SerializeField] private CharacterController controller;
     [SerializeField] private float speed;
 
-    [Header("Health, Mana")]
+    [Header("Stats")]
     [SerializeField] private BoundedFloat health;
-    [SerializeField] private BounderFloat mana;
+    [SerializeField] private BoundedFloat mana;
 
     void Update()
     {
