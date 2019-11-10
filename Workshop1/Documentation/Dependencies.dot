@@ -1,0 +1,46 @@
+digraph G {
+
+    UI -> Player;
+    UI -> Inventory;
+    UI -> Equipment;
+    UI -> TalentTree;
+    UI -> CharacterStats;
+    UI -> SpellBook;
+    UI -> BuffManager;
+
+    Player -> Inventory;
+    Player -> Equipment;
+    Player -> TalentTree;
+    Player -> CharacterStats;
+    Player -> SpellBook;
+    Player -> BuffManager;
+
+    Inventory -> Items;
+    Inventory -> Equipment;
+
+    Equipment -> Inventory;
+    Equipment -> CharacterStats;
+    Equipment -> SpellBook;
+    Equipment -> BuffManager;
+
+    TalentTree -> Player;
+    TalentTree -> CharacterStats;
+    TalentTree -> SpellBook;
+    TalentTree -> BuffManager;
+
+    SpellBook -> Inventory;
+    SpellBook -> Spells;
+    
+    BuffManager -> CharacterStats;
+    BuffManager -> EnemyManager;
+
+    Spells -> BuffManager;
+    Spells -> EnemyManager;
+    Spells -> CharacterStats;
+
+    Items -> Sockets;
+    Items -> Gems;
+    Sockets -> Gems;
+
+    EnemyManager -> Player;
+}
