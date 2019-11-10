@@ -97,9 +97,9 @@ public sealed class HealthBar : MonoBehaviour
 
 Okay, so we replaced the singleton with an injected reference to the player component. Great. High fives all around! Except... did we really gain anything? Let's evaluate against our problem definition.
 
-[x] Reason about individual components in isolation
-[ ] Test individual components in isolation
-[ ] Reuse individual components
+- [x] Reason about individual components in isolation
+- [ ] Test individual components in isolation
+- [ ] Reuse individual components
 
 Not much improvement, really. We can kind of guess what `HealthBar` does without looking at `Player`, but we can't test it in an empty new scene without also putting a `Player` into the scene. We also can't reuse the code for our `ManaBar`. We will have to duplicate the code and replace every `health` with `mana` to make it work. Disappointing.
 
