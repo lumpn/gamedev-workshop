@@ -1,4 +1,4 @@
-# Lesson #1: Decoupling
+# Decoupling
 
 Requirements change. Projects grow. Software evolves.
 
