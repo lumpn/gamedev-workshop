@@ -31,6 +31,9 @@ We realize in our game there can only be one player character and one UI. That m
 public sealed class Player : MonoBehaviour
 {
     public static Player main { get; private set; }
+    
+    public float maxHealth;
+    public float health;
 
     void Start()
     {
