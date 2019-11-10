@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class ProgressBar : MonoBehaviour
+public sealed class StatusBar : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private BoundedFloat data;
