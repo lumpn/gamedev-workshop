@@ -1,0 +1,14 @@
+digraph G {
+    
+    UI;
+    Player;
+
+    node [shape=Rect]
+    PlayerHealth;
+    PlayerMana;
+
+    UI -> PlayerHealth;
+    UI -> PlayerMana;
+    Player -> PlayerHealth;
+    Player -> PlayerMana;
+}
