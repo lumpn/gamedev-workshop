@@ -1,7 +1,5 @@
 # Workshop #1: Decoupling
 
-## Context
-
 Requirements change. Projects grow. Software evolves.
 
 ## Problem
@@ -63,10 +61,27 @@ public sealed class HealthBar : MonoBehaviour
 }
 ```
 
+![Health bar](/Workshop1/Documentation/HealthBar.png "Brilliant!")
+
 Done. So easy. Let's move on to the [next task](https://www.reddit.com/r/restofthefuckingowl/). Soon enough we will have added inventory, equipment, items, gems, sockets, talent tree, character stats, spell book, buffs, and enemies to the game, and they all have to talk to each other. So you introduce more singletons.
 
-[Dependency graph](/Documentation/Dependencies.png "Ship it!")
+![Dependency graph](/Workshop1/Documentation/Dependencies.png "Ship it!")
 
-It is then, that your game designer comes up with this new spell which doubles the character attribute effects of each equipped piece of armor and this new berserk buff which times out within 20 seconds unless you keep killing enemies. You cry a little on the inside and add more singletons. By the time you get a bug report about character stats not resetting properly once a combination of buff times out you're ready to quit your job become a barista instead.
+It is then, that your game designer comes up with this new spell which doubles the character attribute effects of each equipped piece of armor and this new berserk buff which times out within 20 seconds unless you keep killing enemies. You cry a little on the inside and add more singletons. By the time you get yet another bug report about character stats not resetting properly once a combination of buff times out you're ready to quit your job become a barista instead.
+
+How about let's not do that. What if I told you, each component can be isolated, modular, and still share information with other components? Enter [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection)!
+
+## Dependency injection
+
+So you start reading about [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection), [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns), and [inversion of control](https://en.wikipedia.org/wiki/Inversion_of_control), and it's all just a lot of talk and seems really complicated and you have to download extra frameworks or switch to a new language (hah, hah, *sigh*).
+
+The key insight here is that the [inspector in Unity](https://docs.unity3d.com/Manual/UsingTheInspector.html) *is* a dependency injector. In fact, you've already been using it to inject dependencies. In the example above the `HealthBar` component's reference to the UI `Slider` *is* a dependency that you *injected* using the inspector. Crazy, right? But that's really all there is to dependency injection.
 
 
+
+by Unity at runtime. But think about it. The two components are on the same game object on the same prefab. In edit mode we assign the `HealthBar`'s reference to the `Slider`. The assignment gets saved to our prefab file. In play mode, what actually happens is that Unity *instantiates* the prefab and all its components and then it [restores all the saved values](https://docs.unity3d.com/Manual/script-Serialization.html) of all the fields. 
+
+
+## Refactoring
+
+You don't even have to start over. You can gradually refactor your project to 
