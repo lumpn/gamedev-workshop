@@ -1,4 +1,4 @@
-# Workshop #1: Decoupling
+# Lesson #1: Decoupling
 
 Requirements change. Projects grow. Software evolves.
 
