@@ -75,8 +75,11 @@ How about let's not do that. What if I told you, each component can be isolated,
 
 So you start reading about [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection), [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns), and [inversion of control](https://en.wikipedia.org/wiki/Inversion_of_control), and it's all just a lot of talk and seems really complicated and you have to download extra frameworks or switch to a new language (hah, hah, *sigh*).
 
-The key insight here is that the [inspector in Unity](https://docs.unity3d.com/Manual/UsingTheInspector.html) *is* a dependency injector. In fact, you've already been using it to inject dependencies. In the [example above](#singleton) the `HealthBar` component's [reference](#health-bar) to the UI `Slider` *is* a dependency that gets *injected* by Unity at runtime. Crazy, right? But think about it.
+The key insight here is that the [inspector in Unity](https://docs.unity3d.com/Manual/UsingTheInspector.html) *is* a dependency injector. In fact, you've already been using it to inject dependencies. In the example above the `HealthBar` component's reference to the UI `Slider` *is* a dependency that you *injected* using the inspector. Crazy, right? But that's really all there is to dependency injection.
 
+
+
+by Unity at runtime. But think about it. The two components are on the same game object on the same prefab. In edit mode we assign the `HealthBar`'s reference to the `Slider`. The assignment gets saved to our prefab file. In play mode, what actually happens is that Unity *instantiates* the prefab and all its components and then it [restores all the saved values](https://docs.unity3d.com/Manual/script-Serialization.html) of all the fields. 
 
 
 ## Refactoring
