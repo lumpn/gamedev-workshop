@@ -71,16 +71,37 @@ It is then, that your game designer comes up with this new spell which doubles t
 
 How about let's not do that. What if I told you, each component can be isolated, modular, and still share information with other components? Enter [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection)!
 
-## Dependency injection
+### Dependency injection
 
 So you start reading about [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection), [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns), and [inversion of control](https://en.wikipedia.org/wiki/Inversion_of_control), and it's all just a lot of talk and seems really complicated and you have to download extra frameworks or switch to a new language (hah, hah, *sigh*).
 
 The key insight here is that the [inspector in Unity](https://docs.unity3d.com/Manual/UsingTheInspector.html) *is* a dependency injector. In fact, you've already been using it to inject dependencies. In the example above the `HealthBar` component's reference to the UI `Slider` *is* a dependency that you *injected* using the inspector. Crazy, right? But that's really all there is to dependency injection.
 
+```csharp
+public sealed class Player : MonoBehaviour
+{
+    // Look ma, no singleton!
+    // ...
+}
+```
 
+```csharp
+public sealed class HealthBar : MonoBehaviour
+{
+    [SerializeField] private Slider slider;
+    [SerializeField] private Player player;
 
-by Unity at runtime. But think about it. The two components are on the same game object on the same prefab. In edit mode we assign the `HealthBar`'s reference to the `Slider`. The assignment gets saved to our prefab file. In play mode, what actually happens is that Unity *instantiates* the prefab and all its components and then it [restores all the saved values](https://docs.unity3d.com/Manual/script-Serialization.html) of all the fields. 
+    void Update()
+    {
+        slider.maxValue = player.maxHealth;
+        slider.value = player.health;
+    }
+}
+```
 
+![Health bar version 2](/Workshop1/Documentation/HealthBar2.png "Did we gain anything though?")
+
+TODO how to reference across prefabs, scenes, etc.
 
 ## Refactoring
 
