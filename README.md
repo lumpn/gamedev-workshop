@@ -6,8 +6,8 @@ The goal of this game development tech workshop is to help programmers learn, gr
 
 The organizers of the workshop are [Jonas Bötel](https://twitter.com/codelumpn) and [Johnson Lin](https://twitter.com/igdshare). The workshop will be held in both English and Traditional Chinese simultaneously.
 
-## Lessons
-- [Lesson 1](/Lesson1/)
+## Chapters
+1. [Decoupling](/Decoupling/)
 
 ## Translations
 
