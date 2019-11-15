@@ -11,13 +11,13 @@
 
 以上種種都會讓我們難以看懂、維護並發展每個組件，以及整體的系統。
 
-![打結的毛線球](https://cdn.pixabay.com/photo/2016/06/28/10/49/thread-1484387_640.jpg 「能解得開算你厲害。」)
+![打結的毛線球](https://cdn.pixabay.com/photo/2016/06/28/10/49/thread-1484387_640.jpg "能解得開算你厲害。")
 
 ## 解方
 
 我們必須讓組件盡量 [模組化](https://en.wikipedia.org/wiki/Modular_programming) 才能利於分別描述、測試與重複利用。模組化的組件能夠更容易的被修改或替換，讓我們的系統更具彈性，得以適應各種不同的需求修改。我們可以透過拆解耦合的相依組件，並定義最少介面的手段來達到模組化的目的。
 
-![樂高磚塊](https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Lego_bricks.jpg/640px-Lego_bricks.jpg 「以樂高為榜樣吧，朋友。」)
+![樂高磚塊](https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Lego_bricks.jpg/640px-Lego_bricks.jpg "以樂高為榜樣吧，朋友。")
 
 ## 範例
 
@@ -58,11 +58,11 @@ public sealed class HealthBar : MonoBehaviour
 }
 ```
 
-![血條](./Documentation/HealthBar.png 「聰明！」)
+![血條](./Documentation/HealthBar.png "聰明！")
 
 搞定。太輕鬆了。開始著手 [下個任務](https://www.reddit.com/r/restofthefuckingowl/) 吧。沒過多久，我們就寫好了物品欄、裝備、道具、寶石、鑲嵌凹槽、技能樹、角色數值、法術書、Buff，還有敵人系統到遊戲中。這些組件都需要互相溝通。那就加入更多 singleton 吧，易如反掌！
 
-![組件相依圖](./Documentation/Dependencies.png 「可以上架了！」)
+![組件相依圖](./Documentation/Dependencies.png "可以上架了！")
 
 好等等，看起來沒那麼簡單了。就在這時，我們的遊戲企劃突然想到，如果能有個新法術，可以讓身上所有裝備的屬性加值效果加倍就太好了。哦，還有，順便增加個玩家必須每 20 秒殺死敵人才能維持的狂暴 buff。每當新增一個 singleton，程式設計師的心就酸了一下。如果再收到一個新的錯誤回報，說「為什麼在雙重 buff 時限結束後角色數值沒有正確重置啊！」的話，大家可能就會覺得乾脆辭職去賣雞排還比較快活吧。
 
@@ -99,7 +99,7 @@ public sealed class HealthBar : MonoBehaviour
 }
 ```
 
-![血條第二版](./Documentation/HealthBar2.png 「但我們真的有得到什麼好處嗎？」)
+![血條第二版](./Documentation/HealthBar2.png "但我們真的有得到什麼好處嗎？")
 
 好，所以我們把 singleton 模式換掉，改成使用注入的玩家組件參考，歡呼吧！不過...，我們到底從中獲得什麼好處了嗎？重新再來看一下我們原本遭遇的問題吧：
 
@@ -151,7 +151,7 @@ public sealed class Player : MonoBehaviour
 }
 ```
 
-![ScriptableObjects](./Documentation/ScriptableObjects.png 「你可以同時開啟多個 Inspector 視窗。」)
+![ScriptableObjects](./Documentation/ScriptableObjects.png "你可以同時開啟多個 Inspector 視窗。")
 
 我們把所有 *資料* 都移到 *資料容器* 裡面，並在組件裡面去參考它們。`ScriptableObject` 存在於 Unity 的資源（asset）清單中，而且可以從任何 prefab、物件及場景中參考它們。我們也同時可以整合針對血條與法力條的程式碼，因為這兩個東西都同樣只關心一個最大值跟一個現在值。在我們的所有介面組件中，再也沒有指向 `Player` 的參考了，反之亦同。介面與玩家組件都只參考了 *資料*。它們甚至不需要去管是不是同一份資料。
 
