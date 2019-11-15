@@ -72,7 +72,7 @@ public sealed class HealthBar : MonoBehaviour
 
 讓我們來仔細看看 [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection)、[separation of concerns (SoC，常譯「關注點分離」)](https://en.wikipedia.org/wiki/Separation_of_concerns)，與 [inversion of control (IoC，常譯「控制反轉」)](https://en.wikipedia.org/wiki/Inversion_of_control) ，這些看起來都好像很高深、很複雜，然後可能還要下載額外的框架才能使用，還是得轉換到一個全新語言去比較快...（是嗎？）
 
-此處關鍵是意識到，其實 [Unity 裡的 Inspector](https://docs.unity3d.com/Manual/UsingTheInspector.html) *就是*一個 dependency injector（注入器）。事實上，我們已經使用了這個功能來注入相依組件。在 [上述範例](#singleton 模式) 的 `HealthBar` 當中對介面組件 `Slider` 的參考*就是*我們透過 Unity Inspector 來*注入*的相依性了。就跟指定一個欄位一樣簡單。很誇張嗎？但其實這差不多就是關於 dependency injection 你需要知道的全部了。
+此處關鍵是意識到，其實 [Unity 裡的 Inspector](https://docs.unity3d.com/Manual/UsingTheInspector.html) *就是*一個 dependency injector（注入器）。事實上，我們已經使用了這個功能來注入相依組件。在 [上述範例](#singleton-模式) 的 `HealthBar` 當中對介面組件 `Slider` 的參考*就是*我們透過 Unity Inspector 來*注入*的相依性了。就跟指定一個欄位一樣簡單。很誇張嗎？但其實這差不多就是關於 dependency injection 你需要知道的全部了。
 
 ```csharp
 public sealed class Player : MonoBehaviour
