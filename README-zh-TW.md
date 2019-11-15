@@ -7,7 +7,7 @@
 本工作坊由 [Jonas Bötel](https://twitter.com/codelumpn) 發起，並由 [IGDShare 的 Johnson Lin](https://twitter.com/igdshare) 協助中文翻譯。
 
 ## 章節
-1. [拆解耦合](/Decoupling/)
+1. [拆解耦合](/Decoupling/README-zh-TW.md)
 
 ## 翻譯
 
