@@ -11,6 +11,6 @@ The organizers of the workshop are [Jonas Bötel](https://twitter.com/codelumpn)
 
 ## Translations
 
-- [台灣繁體中文 (zh-TW)](/README-zh-TW.md)
+- [台灣繁體中文 (zh-TW)](README-zh-TW.md)
 
 If you find this workshop useful and speak another language, I'd very much appreciate any help translating the chapters. Clone the repository, add a localized copy of the README.md, for example README-pt-BR.md, and send me a pull request.
