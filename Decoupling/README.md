@@ -177,3 +177,9 @@ One beautiful thing about dependency injection is that we can apply it to existi
 
 - [Unite Austin 2017 - Game Architecture with Scriptable Objects](https://youtu.be/raQ3iHhE_Kk) by [@roboryantron](https://github.com/roboryantron)
 - [Unite 2016 - Overthrowing the MonoBehaviour Tyranny in a Glorious Scriptable Object Revolution](https://youtu.be/6vmRwLYWNRo) by [@richard-fine](https://github.com/richard-fine)
+
+## Translations
+
+- [台灣繁體中文 (zh-TW)](README-zh-TW.md)
+
+If you find this workshop useful and speak another language, I'd very much appreciate any help translating the chapters. Clone the repository, add a localized copy of the README.md, for example README-pt-BR.md, and send me a pull request.
