@@ -21,7 +21,7 @@ We want our components to be [modular](https://en.wikipedia.org/wiki/Modular_pro
 
 ## Example
 
-Suppose we're making a game like [Diablo](https://en.wikipedia.org/wiki/Diablo_(video_game)) were we have a player character and a UI showing the player's current health and mana. How do we connect the health bar to the player's health value? The two components are on totally different game objects!
+Suppose we're making a game like [Diablo](https://en.wikipedia.org/wiki/Diablo_(video_game)) where we have a player character and a UI showing the player's current health and mana. How do we connect the health bar to the player's health value? The two components are on totally different game objects!
 
 ### Singletons
 
