@@ -2,8 +2,11 @@
 
 ## Tricks
 - Animator instead of state machine
-- ~~ScriptableObject instead of Singleton~~
 - Timeline instead of lerp
+
+## Decoupling
+- ~~ScriptableObject instead of Singleton~~
+- Runtime sets (observer)
 
 ## Correctness
 - ScriptableObject instead of CSV, json, etc.
@@ -30,6 +33,13 @@
 - Profiling statements
 
 ## Optimization
+- Data locality
+- Data oriented design
+- Moving static data out of prefabs (flyweight)
+- Debug stats on scriptable object (object pool tuning)
+- Double buffer
+- Schedulers
+- Leaky bucket
 - DOTS
 
 ## Unsorted
