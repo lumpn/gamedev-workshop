@@ -21,7 +21,7 @@ We want our components to be [modular](https://en.wikipedia.org/wiki/Modular_pro
 
 ## Example
 
-Suppose we're making a game like [Diablo](https://en.wikipedia.org/wiki/Diablo_(video_game)) were we have a player character and a UI showing the player's current health and mana. How do we connect the health bar to the player's health value? The two components are on totally different game objects!
+Suppose we're making a game like [Diablo](https://en.wikipedia.org/wiki/Diablo_(video_game)) where we have a player character and a UI showing the player's current health and mana. How do we connect the health bar to the player's health value? The two components are on totally different game objects!
 
 ### Singletons
 
@@ -177,3 +177,9 @@ One beautiful thing about dependency injection is that we can apply it to existi
 
 - [Unite Austin 2017 - Game Architecture with Scriptable Objects](https://youtu.be/raQ3iHhE_Kk) by [@roboryantron](https://github.com/roboryantron)
 - [Unite 2016 - Overthrowing the MonoBehaviour Tyranny in a Glorious Scriptable Object Revolution](https://youtu.be/6vmRwLYWNRo) by [@richard-fine](https://github.com/richard-fine)
+
+## Translations
+
+- [台灣繁體中文 (zh-TW)](README-zh-TW.md)
+
+If you find this workshop useful and speak another language, I'd very much appreciate any help translating the chapters. Clone the repository, add a localized copy of the README.md, for example README-pt-BR.md, and send me a pull request.
