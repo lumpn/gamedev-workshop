@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('Import Assets') {
       steps {
-        pwd()
-        sh 'Unity -batchmode -projectPath ProjectPath -targetPlatform TARGET_PLATFORM -accept-apiupdate '
+        bat 'Unity -batchmode -projectPath ProjectPath -targetPlatform TARGET_PLATFORM -accept-apiupdate '
       }
     }
 
