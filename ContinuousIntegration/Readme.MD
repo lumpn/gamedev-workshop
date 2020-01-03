@@ -30,6 +30,11 @@ Manage Jenkins -> Global Tool Configuration -> Git
 
 ## References
 
+https://jenkins.io/blog/2017/04/05/welcome-to-blue-ocean/
+https://jenkins.io/blog/2017/04/06/welcome-to-blue-ocean-editor/
+https://jenkins.io/blog/2017/04/11/welcome-to-blue-ocean-pipeline-activity/
+https://jenkins.io/blog/2017/04/12/welcome-to-blue-ocean-dashboard/
+
 - [Unite 2015 - Continuous Integration with Unity](https://www.youtube.com/watch?v=kSXomLkMR68)
 - [Continuous integration and automated testing](http://itmattersgames.com/2019/02/18/continuous-integration-and-automated-testing/)
 - [Unity Build Automation with Jenkins](https://smashriot.com/unity-build-automation-with-jenkins/)
