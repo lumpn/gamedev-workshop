@@ -8,6 +8,14 @@ pipeline {
         PLATFORM = 'StandaloneWindows64'
       }
       steps {
+        echo '$UNITY'
+        echo '${UNITY}'
+        echo '${env.UNITY}'
+        echo '{UNITY}'
+        echo '{env.UNITY}'
+        echo 'env.UNITY'
+        echo 'UNITY'
+        echo '"$UNITY"'
         bat '$UNITY -batchmode -projectPath $PROJECT -targetPlatform $PLATFORM -accept-apiupdate'
       }
     }
