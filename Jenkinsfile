@@ -3,13 +3,14 @@ pipeline {
   stages {
     stage('Import Assets') {
       steps {
-        tool(name: 'Unity', type: 'Executable')
+        pwd()
+        sh 'Unity -batchmode -projectPath ProjectPath -targetPlatform TARGET_PLATFORM -accept-apiupdate '
       }
     }
 
     stage('Run Unit Tests') {
       steps {
-        tool(name: 'Unity', type: 'Executable')
+        sh 'Unity.exe -batchmode -projectPath ProjectPath -targetPlatform TARGET_PLATFORM -runEditorTests'
       }
     }
 
@@ -25,5 +26,8 @@ pipeline {
       }
     }
 
+  }
+  environment {
+    Unity = 'C:\\Program Files\\Unity\\Hub\\Editor\\2018.4.14f1\\Editor\\Unity.exe'
   }
 }
