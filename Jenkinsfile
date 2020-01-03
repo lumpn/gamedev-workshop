@@ -6,7 +6,7 @@ pipeline {
         UNITY = 'C:\\Program Files\\Unity\\Hub\\Editor\\2018.4.14f1\\Editor\\Unity.exe'
       }
       steps {
-        bat '${UNITY} -batchmode -projectPath ProjectPath -targetPlatform TARGET_PLATFORM -accept-apiupdate '
+        bat '${env.UNITY} -batchmode -projectPath ProjectPath -targetPlatform TARGET_PLATFORM -accept-apiupdate '
       }
     }
 
