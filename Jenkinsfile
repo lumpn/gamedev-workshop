@@ -2,8 +2,11 @@ pipeline {
   agent any
   stages {
     stage('Import Assets') {
+      environment {
+        UNITY = 'C:\\Program Files\\Unity\\Hub\\Editor\\2018.4.14f1\\Editor\\Unity.exe'
+      }
       steps {
-        bat '${env.UNITY} -batchmode -projectPath ProjectPath -targetPlatform TARGET_PLATFORM -accept-apiupdate '
+        bat '${UNITY} -batchmode -projectPath ProjectPath -targetPlatform TARGET_PLATFORM -accept-apiupdate '
       }
     }
 
