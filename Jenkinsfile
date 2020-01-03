@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Import Assets') {
       steps {
-        bat 'C:\\Program Files\\Unity\\Hub\\Editor\\2018.4.14f1\\Editor\\Unity.exe -batchmode -projectPath ProjectPath -targetPlatform TARGET_PLATFORM -accept-apiupdate'
+        bat '"C:\\Program Files\\Unity\\Hub\\Editor\\2018.4.14f1\\Editor\\Unity.exe" -batchmode -projectPath ProjectPath -targetPlatform TARGET_PLATFORM -accept-apiupdate'
       }
     }
 
