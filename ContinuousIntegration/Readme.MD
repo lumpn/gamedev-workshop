@@ -24,6 +24,9 @@ Verify project automatically.
 
 ## Details
 Manage Jenkins -> Global Tool Configuration -> Git
+https://stackoverflow.com/questions/51500698/where-to-find-option-to-change-workspace-path-location-in-jenkins
+Actually has to modify config.xml in the Jenkins install dir. See workspaceDir element.
+Better yet, add a local agent. Start like Launch agent via execution of command on the master c:\Program Files (x86)\Jenkins\jre\bin\java -jar W:\Jenkins\agent.jar
 
 ## See also
 [Unity Cloud Build](https://unity3d.com/unity/features/cloud-build) does not work with consoles.

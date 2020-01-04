@@ -3,23 +3,18 @@ pipeline {
   environment {
     UNITY = '"C:\\Program Files\\Unity\\Hub\\Editor\\2018.4.14f1\\Editor\\Unity.exe"'
     PROJECT = 'ContinuousIntegration'
-    PLATFORM = 'StandaloneWindows64'
+    PLATFORM = 'XboxOne'
     OUTPUT = 'Build/ContinuousIntegration.exe'
   }
   stages {
     stage('Import Assets') {
       steps {
-        bat "$UNITY -batchmode -quit -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -accept-apiupdate"
+        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -quit -accept-apiupdate"
       }
     }
     stage('Check Shaders') {
       steps {
-        bat "$UNITY -batchmode -quit -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -diag-debug-shader-compiler"
-      }
-    }
-    stage('Refresh Database') {
-      steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -executeMethod UnityEditor.AssetDatabase.Refresh"
+        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -quit -diag-debug-shader-compiler"
       }
     }
     stage('Run Unit Tests') {
@@ -29,7 +24,7 @@ pipeline {
     }
     stage('Build Player') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -buildWindows64Player $OUTPUT"
+        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -quit -diag-debug-shader-compiler -buildWindows64Player $OUTPUT"
       }
     }
   }
