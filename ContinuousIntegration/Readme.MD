@@ -28,6 +28,26 @@ https://stackoverflow.com/questions/51500698/where-to-find-option-to-change-work
 Actually has to modify config.xml in the Jenkins install dir. See workspaceDir element.
 Better yet, add a local agent. Start like Launch agent via execution of command on the master c:\Program Files (x86)\Jenkins\jre\bin\java -jar W:\Jenkins\agent.jar
 
+## Notes
+1. Install Jenkins from .msi (doesn't ask any options)
+2. Open localhost:8080
+3. Unlock with initial admin password (follow instructions on screen)
+4. Select plugins to install (more later)
+5. Select none (top), select GitHub, GitHub Authentication, Pipeline, install.
+6. Skip creating first admin user. Continue as admin (bottom).
+7. Accept default instance configuration (http://localhost:8080, no https!). Save and finish.
+8. Manage Jenkins -> Configure System -> Usage: ony build jobs with label expressions matching this node
+
+9. Manage Jenkins -> Global Security -> Agents -> TCP port for inbound agents: random
+10. Manage Jenkins -> Manage Nodes -> New Node (name Agent1, permanent agent, keep defaults)
+11. Manage Jenkins -> Manage Nodes -> Agent1 -> agent.jar save file.
+12. Create batch file "c:\Program Files (x86)\Jenkins\jre\bin\java" -jar agent.jar -jnlpUrl http://localhost:8080/computer/Agent1/slave-agent.jnlp -secret 7a729911603e5918b83052a24e7258dc26ad85359831d6e040d0999f5de5eb8b 
+13. Install as service...
+
+14. Manage Jenkins -> Global Tool Configuration -> Git -> Delete -> Add Git -> JGit
+15. Add jobs...
+
+
 ## See also
 [Unity Cloud Build](https://unity3d.com/unity/features/cloud-build) does not work with consoles.
 
