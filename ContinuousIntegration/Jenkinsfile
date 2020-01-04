@@ -12,9 +12,14 @@ pipeline {
         bat "$UNITY -batchmode -quit -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -accept-apiupdate"
       }
     }
+    stage('Refresh Database') {
+      steps {
+        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -executeMethod AssetDatabase.Refresh"
+      }
+    }
     stage('Check Shaders') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -diag-debug-shader-compiler"
+        bat "$UNITY -batchmode -quit -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -diag-debug-shader-compiler"
       }
     }
     stage('Run Unit Tests') {
