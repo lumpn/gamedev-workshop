@@ -12,8 +12,11 @@ namespace Tests
         [Test]
         public void ShaderHasErrors()
         {
-var infos = ShaderUtil.GetAllShaderInfo();
-
+            var infos = ShaderUtil.GetAllShaderInfo();
+            foreach (var info in infos)
+            {
+                Assert.IsFalse(info.hasErrors, "Shader '{0}' has errors.", info.name);
+            }
         }
     }
 }
