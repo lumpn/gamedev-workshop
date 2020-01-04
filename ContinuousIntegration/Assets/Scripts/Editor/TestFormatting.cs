@@ -7,8 +7,14 @@ using UnityEngine.TestTools;
 
 namespace Tests
 {
-    public class NewTestScript
+    public class TestFormatting
     {
+        [Test]
+        public void TestRefresh()
+        {
+            AssetDatabase.Refresh();
+        }
+
         [Test]
         public void TestLineEndings()
         {
