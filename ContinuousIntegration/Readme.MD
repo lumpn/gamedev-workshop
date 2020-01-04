@@ -33,7 +33,7 @@ Better yet, add a local agent. Start like Launch agent via execution of command 
 2. Open localhost:8080
 3. Unlock with initial admin password (follow instructions on screen)
 4. Select plugins to install (more later)
-5. Select none (top), select GitHub, GitHub Authentication, Pipeline, install.
+5. Select none (top), select GitHub, GitHub Authentication (doesn't work?!), Pipeline, install.
 6. Skip creating first admin user. Continue as admin (bottom).
 7. Accept default instance configuration (http://localhost:8080, no https!). Save and finish.
 8. Manage Jenkins -> Configure System -> Usage: ony build jobs with label expressions matching this node
@@ -47,6 +47,13 @@ Better yet, add a local agent. Start like Launch agent via execution of command 
 14. Manage Jenkins -> Global Tool Configuration -> Git -> Delete -> Add Git -> JGit
 15. Add jobs...
 
+## TODO:
+- jgit doesn't support LFS
+- consider installing with standard plugins to simplify things
+- git lfs checkout
+- undo changes from previous build without deleting library folder
+- delete build output
+- upload to steam
 
 ## See also
 [Unity Cloud Build](https://unity3d.com/unity/features/cloud-build) does not work with consoles.
