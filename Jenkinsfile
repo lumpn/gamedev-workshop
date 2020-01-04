@@ -3,25 +3,25 @@ pipeline {
   stages {
     stage('Import Assets') {
       steps {
-        bat "$UNITY -batchmode -projectPath $PROJECT -targetPlatform $PLATFORM -accept-apiupdate"
+        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -accept-apiupdate"
       }
     }
 
     stage('Run Unit Tests') {
       steps {
-        sh "$UNITY -batchmode -projectPath $PROJECT -targetPlatform $PLATFORM -runEditorTests"
+        sh "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -runEditorTests"
       }
     }
 
     stage('Check Shaders') {
       steps {
-        bat "$UNITY -batchmode -projectPath $PROJECT -targetPlatform $PLATFORM -diag-debug-shader-compiler"
+        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -diag-debug-shader-compiler"
       }
     }
 
     stage('Build Player') {
       steps {
-        sh "$UNITY -batchmode -projectPath $PROJECT -targetPlatform $PLATFORM -buildWindows64Player $OUTPUT"
+        sh "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -buildWindows64Player $OUTPUT"
       }
     }
 
