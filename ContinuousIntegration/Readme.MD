@@ -33,7 +33,7 @@ Better yet, add a local agent. Start like Launch agent via execution of command 
 2. Open localhost:8080
 3. Unlock with initial admin password (follow instructions on screen)
 4. Select plugins to install (more later)
-5. Select none (top), install.
+5. Select none (top), select GitHub, GitHub Authentication, Pipeline, install.
 6. Skip creating first admin user. Continue as admin (bottom).
 7. Accept default instance configuration (http://localhost:8080, no https!). Save and finish.
 8. Manage Jenkins -> Configure System -> Usage: ony build jobs with label expressions matching this node
@@ -43,6 +43,9 @@ Better yet, add a local agent. Start like Launch agent via execution of command 
 11. Manage Jenkins -> Manage Nodes -> Agent1 -> agent.jar save file.
 12. Create batch file "c:\Program Files (x86)\Jenkins\jre\bin\java" -jar agent.jar -jnlpUrl http://localhost:8080/computer/Agent1/slave-agent.jnlp -secret 7a729911603e5918b83052a24e7258dc26ad85359831d6e040d0999f5de5eb8b 
 13. Install as service...
+
+14. Manage Jenkins -> Global Tool Configuration -> Git -> Delete -> Add Git -> JGit
+15. Add jobs...
 
 
 ## See also
