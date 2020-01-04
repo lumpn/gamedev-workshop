@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "com.unity.package-manager-ui": "2.0.8",
+    "com.unity.test-framework": "0.0.4-preview",
+    "com.unity.modules.audio": "1.0.0",
+    "com.unity.modules.imgui": "1.0.0",
+    "com.unity.modules.jsonserialize": "1.0.0",
+    "com.unity.modules.physics": "1.0.0",
+    "com.unity.modules.ui": "1.0.0"
+  }
+}
