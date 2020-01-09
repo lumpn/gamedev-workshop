@@ -1,20 +1,26 @@
 pipeline {
   agent any
   environment {
+    GIT = 'git.exe'
     UNITY = '"C:\\Program Files\\Unity\\Hub\\Editor\\2018.4.14f1\\Editor\\Unity.exe"'
     PROJECT = 'ContinuousIntegration'
     PLATFORM = 'XboxOne'
     OUTPUT = 'Build/ContinuousIntegration.exe'
   }
   stages {
+    stage('Clean workspace') {
+      steps {
+        bat "$GIT clean -x -f -e $PROJECT/Library $PROJECT"
+      }
+    }
+    stage('Update workspace') {
+      steps {
+        bat "$GIT pull"
+      }
+    }
     stage('Import Assets') {
       steps {
         bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -quit -accept-apiupdate"
-      }
-    }
-    stage('Check Shaders') {
-      steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -quit -diag-debug-shader-compiler"
       }
     }
     stage('Run Unit Tests') {
