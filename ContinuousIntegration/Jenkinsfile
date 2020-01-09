@@ -17,6 +17,7 @@ pipeline {
     stage('Update Workspace') {
       steps {
         bat "$GIT pull"
+        bat "$GIT lfs pull"
       }
     }
     stage('Import Assets') {
