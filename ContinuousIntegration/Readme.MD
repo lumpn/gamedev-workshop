@@ -6,7 +6,7 @@ Catch bugs early.
 ## Method
 Verify project automatically.
 
-## Prerequesites
+## Prerequisites
 - Version control
 - Jenkins
 - Automated tests
