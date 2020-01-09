@@ -12,6 +12,7 @@ namespace Tests
         [Test]
         public void TestRefresh()
         {
+            Debug.Log(EditorUserBuildSettings.activeBuildTarget);
             AssetDatabase.Refresh();
         }
 
