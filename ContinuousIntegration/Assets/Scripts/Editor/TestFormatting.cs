@@ -12,7 +12,7 @@ namespace Tests
         [Test]
         public void TestRefresh()
         {
-            Debug.Log(EditorUserBuildSettings.activeBuildTarget);
+            Debug.LogFormat("Active build target: {0}", EditorUserBuildSettings.activeBuildTarget);
             AssetDatabase.Refresh();
         }
 

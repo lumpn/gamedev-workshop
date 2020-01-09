@@ -28,9 +28,14 @@ pipeline {
         bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -runEditorTests"
       }
     }
-    stage('Build Player') {
+    stage('Build') {
       steps {
         bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -quit -diag-debug-shader-compiler -buildWindows64Player $OUTPUT"
+      }
+    }
+    stage('Upload Build') {
+      steps {
+        echo "TODO"
       }
     }
   }
