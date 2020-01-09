@@ -4,33 +4,34 @@ pipeline {
     GIT = 'git.exe'
     UNITY = '"C:\\Program Files\\Unity\\Hub\\Editor\\2018.4.14f1\\Editor\\Unity.exe"'
     PROJECT = 'ContinuousIntegration'
-    PLATFORM = 'XboxOne'
+    PLATFORM = 'Win64'
     OUTPUT = 'Build/ContinuousIntegration.exe'
   }
   stages {
-    stage('Clean workspace') {
+    stage('Clean Workspace') {
       steps {
-        bat "$GIT clean -x -f -e $PROJECT/Library $PROJECT"
+        bat "$GIT reset --hard"
+        bat "$GIT clean -x -f -d -e $PROJECT/Library"
       }
     }
-    stage('Update workspace') {
+    stage('Update Workspace') {
       steps {
         bat "$GIT pull"
       }
     }
     stage('Import Assets') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -quit -accept-apiupdate"
+        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -quit -accept-apiupdate"
       }
     }
     stage('Run Unit Tests') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -runEditorTests"
+        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -runEditorTests"
       }
     }
     stage('Build') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -targetPlatform $PLATFORM -quit -diag-debug-shader-compiler -buildWindows64Player $OUTPUT"
+        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -quit -buildWindows64Player $OUTPUT"
       }
     }
     stage('Upload Build') {
