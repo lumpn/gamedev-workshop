@@ -57,6 +57,8 @@ Better yet, add a local agent. Start like Launch agent via execution of command 
 - download git on the agent https://git-scm.com/download/win
 -- select Git LFS when installing!
 - use JGit on the master to download the latest jenkinsfile
+- gotta use a multibranch pipeline for github. blue ocean does a decent job creating it, but we have to manually switch to jenkinsfile and remove clean before/after checkout.
+
 
 ## See also
 [Unity Cloud Build](https://unity3d.com/unity/features/cloud-build) does not work with consoles.
