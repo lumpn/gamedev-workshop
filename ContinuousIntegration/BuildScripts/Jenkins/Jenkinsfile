@@ -1,11 +1,15 @@
 pipeline {
   agent any
   environment {
-    GIT = 'git.exe'
+    GIT = '"C:\\Program Files\\Git\\bin\\git.exe"'
     UNITY = '"C:\\Program Files\\Unity\\Hub\\Editor\\2018.4.14f1\\Editor\\Unity.exe"'
     PROJECT = 'ContinuousIntegration'
     PLATFORM = 'Win64'
     OUTPUT = 'Build/ContinuousIntegration.exe'
+    STEAMCMD = 'W:\\Jenkins\\steamworks\\tools\\ContentBuilder\\builder\\steamcmd.exe'
+    STEAMUSERNAME = 'steam_username_here'
+    STEAMPASSWORD = 'steam_password_here'
+    STEAMSCRIPT = 'ContinuousIntegration\\BuildScripts\\Steam\\app_build.vdf'
   }
   stages {
     stage('Clean Workspace') {
@@ -37,7 +41,7 @@ pipeline {
     }
     stage('Upload Build') {
       steps {
-        echo "TODO"
+        echo "$STEAMCMD +login $STEAMUSERNAME $STEAMPASSWORD +run_app_build $STEAMSCRIPT"
       }
     }
   }
