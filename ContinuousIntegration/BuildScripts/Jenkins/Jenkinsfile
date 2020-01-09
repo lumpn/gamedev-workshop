@@ -6,10 +6,10 @@ pipeline {
     PROJECT = 'ContinuousIntegration'
     PLATFORM = 'Win64'
     OUTPUT = 'Build/ContinuousIntegration.exe'
-    STEAMCMD = 'W:\\Jenkins\\steamworks\\tools\\ContentBuilder\\builder\\steamcmd.exe'
+    STEAMCMD = '"W:\\Jenkins\\steamworks\\tools\\ContentBuilder\\builder\\steamcmd.exe"'
     STEAMUSERNAME = 'steam_username_here'
     STEAMPASSWORD = 'steam_password_here'
-    STEAMSCRIPT = 'ContinuousIntegration\\BuildScripts\\Steam\\app_build.vdf'
+    STEAMSCRIPT = '"ContinuousIntegration\\BuildScripts\\Steam\\app_build.vdf"'
   }
   stages {
     stage('Clean Workspace') {
