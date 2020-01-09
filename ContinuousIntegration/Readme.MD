@@ -54,6 +54,9 @@ Better yet, add a local agent. Start like Launch agent via execution of command 
 - undo changes from previous build without deleting library folder
 - delete build output
 - upload to steam
+- download git on the agent https://git-scm.com/download/win
+-- select Git LFS when installing!
+- use JGit on the master to download the latest jenkinsfile
 
 ## See also
 [Unity Cloud Build](https://unity3d.com/unity/features/cloud-build) does not work with consoles.
