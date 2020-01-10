@@ -2,9 +2,9 @@
 Requirements change. Software evolves. Stay flexible through separation of concerns.
 
 ## Problem
-Tight coupling between modules of a system means that it's:
-- difficult to reason about individual components in isolation.
-- difficult to test individual components in isolation.
+Tight coupling between modules of a system means that it is
+- difficult to reason about individual components in isolation,
+- difficult to test individual components in isolation, and
 - difficult to reuse individual components.
 
 All of which make it difficult to understand, maintain, and evolve both individual components and the system as a whole.
