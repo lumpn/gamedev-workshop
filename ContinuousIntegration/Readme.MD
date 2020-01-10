@@ -1,7 +1,25 @@
 # Continuous Integration
+Keep shipping. Keep testing. Catch bugs early.
 
-## Goal
-Catch bugs early.
+## Problem
+Game assets tend to have lots of dependencies across various disciplines. Projects can easily break when people change things without realizing which other things depend on them. The longer it takes to notice the problem, the longer it takes to identify and fix the change that caused it.
+
+Furthermore, at any given time there's a slightly different work-in-progress version of the project on each developer's machine, making it difficult to reproduce issues seen on another machine. Some issues might even manifest on the target platform only.
+
+```
+¯\_(ツ)_/¯
+It works on
+my machine.
+```
+
+## Solution
+We want to reduce the time between making a change and seeing it on the target platform as much as possible. We want to have checks that tell us when something broke. We want to run those checks after every change. We want to automate the entire process.
+
+We achive continuous integration and delivery by
+1. maintaining a single repository
+2. automating the build process
+3. automating the testing process
+4. automating the shipping process
 
 ## Method
 Verify project automatically.
@@ -59,16 +77,19 @@ Better yet, add a local agent. Start like Launch agent via execution of command 
 - use JGit on the master to download the latest jenkinsfile
 - gotta use a multibranch pipeline for github. blue ocean does a decent job creating it, but we have to manually switch to jenkinsfile and remove clean before/after checkout.
 
-
 ## See also
 [Unity Cloud Build](https://unity3d.com/unity/features/cloud-build) does not work with consoles.
 
-## References
 
-https://jenkins.io/blog/2017/04/05/welcome-to-blue-ocean/
-https://jenkins.io/blog/2017/04/06/welcome-to-blue-ocean-editor/
-https://jenkins.io/blog/2017/04/11/welcome-to-blue-ocean-pipeline-activity/
-https://jenkins.io/blog/2017/04/12/welcome-to-blue-ocean-dashboard/
+## Further reading
+- [Continuous Integration](https://martinfowler.com/articles/continuousIntegration.html) by Martin Fowler
+
+## References
+- https://martinfowler.com/articles/continuousIntegration.html
+- https://jenkins.io/blog/2017/04/05/welcome-to-blue-ocean/
+- https://jenkins.io/blog/2017/04/06/welcome-to-blue-ocean-editor/
+- https://jenkins.io/blog/2017/04/11/welcome-to-blue-ocean-pipeline-activity/
+- https://jenkins.io/blog/2017/04/12/welcome-to-blue-ocean-dashboard/
 
 - [Unite 2015 - Continuous Integration with Unity](https://www.youtube.com/watch?v=kSXomLkMR68)
 - [Continuous integration and automated testing](http://itmattersgames.com/2019/02/18/continuous-integration-and-automated-testing/)
