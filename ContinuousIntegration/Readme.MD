@@ -31,8 +31,8 @@ We connect Jenkins to the repository and tell it to build the project every time
 
 TODO: installation process
 
-Once everything is installed and running, we're using a [Jenkinsfile](https://jenkins.io/doc/book/pipeline/jenkinsfile/) to tell Jenkins what to do, which is
-1. start Unity and wait for it to import the changed assets,
+Once everything is installed and running, we're using a [Jenkinsfile](https://jenkins.io/doc/book/pipeline/jenkinsfile/) to tell Jenkins what to do, which is to start Unity and
+1. wait for it to import the changed assets,
 2. run unit tests, and
 3. make a build.
 
