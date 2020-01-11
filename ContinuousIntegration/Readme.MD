@@ -13,13 +13,64 @@ my machine.
 ```
 
 ## Solution
-We want to reduce the time between making a change and seeing it on the target platform as much as possible. We want to have checks that tell us when something broke. We want to run those checks after every change. We want to automate the entire process.
+We want to reduce the time between making a change and seeing it on the target platform as much as possible. We want to have checks that tell us when something broke. We want to run those checks after every change. That means we have to automate the entire process.
 
 We achive continuous integration and delivery by
-1. maintaining a single repository
-2. automating the build process
-3. automating the testing process
-4. automating the shipping process
+1. maintaining a single repository,
+2. automating the build process,
+3. automating the testing process, and
+4. automating the shipping process.
+
+### Maintaining a single repository
+If you're already using [version control](https://en.wikipedia.org/wiki/Version_control) you can skip ahead. Keep using what works for you. If you're not using version control yet, currently your best options are [GitHub Enterprise](https://github.com/enterprise) and [Plastic SCM](https://www.plasticscm.com/). Both [cost](https://github.com/pricing) [money](https://www.plasticscm.com/pricing), but not too much. They are well worth it.
+
+Stay away from [Unity Collaborate](https://unity.com/unity/features/collaborate)g
+
+### Automating the build process
+There are many 
+If you're using GitHub Enterprise,
+
+
+```groovy
+    stage('Import Assets') {
+      steps {
+        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -quit -accept-apiupdate"
+      }
+    }
+    stage('Run Unit Tests') {
+      steps {
+        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -runEditorTests"
+      }
+    }
+    stage('Build') {
+      steps {
+        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -quit -buildWindows64Player $OUTPUT"
+      }
+    }
+```
+
+### Automatic the testing process
+```csharp
+        [Test]
+        public void ShaderHasErrors()
+        {
+            var infos = ShaderUtil.GetAllShaderInfo();
+            foreach (var info in infos)
+            {
+                Assert.IsFalse(info.hasErrors, "Shader '{0}' has errors.", info.name);
+            }
+        }
+```
+
+### Automating the shipping process
+```groovy
+    stage('Upload Build') {
+      steps {
+        echo "$STEAMCMD +login $STEAMUSERNAME $STEAMPASSWORD +run_app_build $STEAMSCRIPT"
+      }
+    }
+```
+
 
 ## Method
 Verify project automatically.
@@ -66,6 +117,7 @@ Better yet, add a local agent. Start like Launch agent via execution of command 
 15. Add jobs...
 
 ## TODO:
+- add broken reference check
 - jgit doesn't support LFS
 - consider installing with standard plugins to simplify things
 - git lfs checkout
