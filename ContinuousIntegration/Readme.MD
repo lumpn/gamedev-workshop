@@ -24,12 +24,19 @@ We achive continuous integration and delivery by
 ### Maintaining a single repository
 If you're already using [version control](https://en.wikipedia.org/wiki/Version_control) you can skip ahead. Keep using what works for you. If you're not using version control yet, currently your best options are [GitHub Enterprise](https://github.com/enterprise) and [Plastic SCM](https://www.plasticscm.com/). Both [cost](https://github.com/pricing) [money](https://www.plasticscm.com/pricing), but not too much. They are well worth it.
 
-Stay away from [Unity Collaborate](https://unity.com/unity/features/collaborate)g
+Stay away from [Unity Collaborate](https://unity.com/unity/features/collaborate). It doesn't work properly and its feature set is severly limited. Useful for game jams, but that's about it.
 
 ### Automating the build process
-There are many 
-If you're using GitHub Enterprise,
+If you're using GitHub Enterprise, you might want to give [GitHub Actions](https://github.com/features/actions) a try. That said, we're going to be using [Jenkins](https://jenkins.io/), which is free, open source, and runs locally.
 
+We connect Jenkins to the repository and tell it to build the project every time a change gets committed. Depending on your team size that's a lot of builds, so it's best to install Jenkins on an unused machine.
+
+TODO: installation process
+
+Once everything is installed and running, we're using a [Jenkinsfile](https://jenkins.io/doc/book/pipeline/jenkinsfile/) to tell Jenkins what to do, which is
+1. start Unity and wait for it to import the changed assets,
+2. run unit tests, and
+3. make a build.
 
 ```groovy
     stage('Import Assets') {
@@ -50,6 +57,8 @@ If you're using GitHub Enterprise,
 ```
 
 ### Automatic the testing process
+We're already running the unit tests before each build. It is a good idea to cover as many potential problems as possible using unit tests. We start with a basic set of consistency checks.
+
 ```csharp
         [Test]
         public void ShaderHasErrors()
@@ -62,7 +71,13 @@ If you're using GitHub Enterprise,
         }
 ```
 
+It takes time to develop a comprehensive test suite. A good guideline is to add a test every time a new issue appears in the build. The idea is to write the new test such that it prevents the issue from ever happening again.
+
 ### Automating the shipping process
+
+```
+```
+
 ```groovy
     stage('Upload Build') {
       steps {
