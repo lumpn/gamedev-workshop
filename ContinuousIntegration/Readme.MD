@@ -74,8 +74,10 @@ We're already running the unit tests before each build. It is a good idea to cov
 It takes time to develop a comprehensive test suite. A good guideline is to add a test every time a new issue appears in the build. The idea is to write the new test such that it prevents the issue from ever happening again.
 
 ### Automating the shipping process
+So we now have a build that passed basic checks, but that still doesn't mean much. What we need is *real people* testing it.
 
 ```
+It does not exist until you ship it.
 ```
 
 ```groovy
