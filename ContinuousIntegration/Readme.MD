@@ -1,5 +1,5 @@
 # Continuous Integration
-Keep shipping. Keep testing. Catch bugs early.
+Keep testing. Keep shipping. Catch bugs early.
 
 ## Problem
 Game assets tend to have lots of dependencies across various disciplines. Projects can easily break when people change things without realizing which other things depend on them. The longer it takes to notice the problem, the longer it takes to identify and fix the change that caused it.
@@ -22,12 +22,10 @@ We achive continuous integration and delivery by
 4. automating the shipping process.
 
 ### Maintaining a single repository
-If you're already using [version control](https://en.wikipedia.org/wiki/Version_control) you can skip ahead. Keep using what works for you. If you're not using version control yet, currently your best options are [GitHub Enterprise](https://github.com/enterprise) and [Plastic SCM](https://www.plasticscm.com/). Both [cost](https://github.com/pricing) [money](https://www.plasticscm.com/pricing), but not too much. They are well worth it.
-
-Stay away from [Unity Collaborate](https://unity.com/unity/features/collaborate). It doesn't work properly and its feature set is severly limited. Useful for game jams, but that's about it.
+If you're already using [version control](https://en.wikipedia.org/wiki/Version_control) you can skip ahead. Keep using what works for you. If you're not using version control yet, currently your best options are [GitHub Enterprise](https://github.com/enterprise) and [Plastic SCM](https://www.plasticscm.com/). Both [cost](https://github.com/pricing) [money](https://www.plasticscm.com/pricing), but not too much. They are well worth it. Stay away from [Unity Collaborate](https://unity.com/unity/features/collaborate). It doesn't work properly and its feature set is severly limited. Useful for game jams, but that's about it.
 
 ### Automating the build process
-If you're using GitHub Enterprise, you might want to give [GitHub Actions](https://github.com/features/actions) a try. That said, we're going to be using [Jenkins](https://jenkins.io/), which is free, open source, and runs locally.
+If you're using GitHub Enterprise, you might want to give [GitHub Actions](https://github.com/features/actions) a try. [Unity Cloud Build](https://unity3d.com/unity/features/cloud-build) is too basic for anything serious. We'll be using [Jenkins](https://jenkins.io/) here, which is free, open source, and runs locally.
 
 We connect Jenkins to the repository and tell it to build the project every time a change gets committed. Depending on your team size that's a lot of builds, so it's best to install Jenkins on an unused machine.
 
