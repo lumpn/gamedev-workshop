@@ -21,13 +21,22 @@ We achive continuous integration and delivery by
 3. automating the testing process, and
 4. automating the shipping process.
 
-### Maintaining a single repository
-If you're already using [version control](https://en.wikipedia.org/wiki/Version_control) you can skip ahead. Keep using what works for you. If you're not using version control yet, currently your best options are [GitHub Enterprise](https://github.com/enterprise) and [Plastic SCM](https://www.plasticscm.com/). Both [cost](https://github.com/pricing) [money](https://www.plasticscm.com/pricing), but not too much. They are well worth it. Stay away from [Unity Collaborate](https://unity.com/unity/features/collaborate). It doesn't work properly and its feature set is severly limited. Useful for game jams, but that's about it.
+## Maintaining a single repository
+If you're already using [version control](https://en.wikipedia.org/wiki/Version_control) you can skip ahead. Keep using what works for you. If you're not using version control yet, currently your best options are [GitHub Enterprise](https://github.com/enterprise) and [Plastic SCM](https://www.plasticscm.com/). Both [cost](https://github.com/pricing) [money](https://www.plasticscm.com/pricing), but not too much. They are well worth it. Stay away from [Unity Collaborate](https://unity.com/unity/features/collaborate). It doesn't work properly and its feature set is severly limited. It might be useful for game jams, but that's about it.
 
-### Automating the build process
+## Automating the build process
 If you're using GitHub Enterprise, you might want to give [GitHub Actions](https://github.com/features/actions) a try. [Unity Cloud Build](https://unity3d.com/unity/features/cloud-build) is too basic for anything serious. We'll be using [Jenkins](https://jenkins.io/) here, which is free, open source, and runs locally.
 
-We connect Jenkins to the repository and tell it to build the project every time a change gets committed. Depending on your team size that's a lot of builds, so it's best to install Jenkins on an unused machine.
+### Jenkins
+We connect Jenkins to the repository and tell it to build the project every time a change gets committed. That's a lot of builds, so it's best to [install Jenkins](https://jenkins.io/download/thank-you-downloading-windows-installer-stable/) on an unused machine, which we will use as our build server.
+
+After installing Jenkins and logging in to http://localhost:8080 with the initial admin password, Jenkins will ask which plugins to install. We're going to "Install suggested plugins". We won't need most of them, but it's too tedious to pick plugins manually. Speaking of plugins, everything in Jenkins is a plugin, most of them contributed by volunteers. Most of them are not *production ready*, which is why you will often find several plugins for the same task. We're going to bypass all that keep things as simple as possible.
+
+### Build job
+To make Jenkins build the game, we need to wrap the build process in a Jenkins job, so let's create a new job using the "Freestyle project" template.
+
+### Build agent
+
 
 TODO: installation process
 
