@@ -33,17 +33,22 @@ We connect Jenkins to the repository and tell it to build the project every time
 After installing Jenkins and logging in to http://localhost:8080 with the initial admin password, Jenkins will ask which plugins to install. We're going to "Install suggested plugins". We won't need most of them, but it's too tedious to pick plugins manually. Speaking of plugins, everything in Jenkins is a plugin, most of them contributed by volunteers. Most of them are not *production ready*, which is why you will often find several plugins for the same task. We're going to bypass all that keep things as simple as possible.
 
 ### Build job
-To make Jenkins build the game, we need to wrap the build process in a Jenkins job, so let's create a new job using the "Freestyle project" template.
+To make Jenkins build the game, we need to wrap the build process in a Jenkins job, so let's create a new job using the "Pipeline" template.
 
-### Build agent
+![Jenkins welcome page](Documentation/Jenkins1.png "It works!")
+![Jenkins create job page](Documentation/Jenkins2.png "Pipelines for Mario")
+![Jenkins pipeline setup](Documentation/Pipeline1.png)
+![Jenkins pipeline triggers](Documentation/Pipeline2.png)
+![Jenkins pipeline script](Documentation/Pipeline3.png)
 
+The job configuration in Jenkins is fairly minimal. All we need is for Jenkins to download the [pipeline script](https://jenkins.io/doc/book/pipeline/jenkinsfile/) from our version control system and then execute it.
 
-TODO: installation process
-
-Once everything is installed and running, we're using a [Jenkinsfile](https://jenkins.io/doc/book/pipeline/jenkinsfile/) to tell Jenkins what to do, which is to start Unity and
-1. wait for it to import the changed assets,
-2. run unit tests, and
-3. make a build.
+In [our pipeline script](BuildScripts/Jenkins/Jenkinsfile), we
+1. update to the latest revision on the repository,
+2. start Unity and let it import assets,
+3. run the unit tests,
+4. make a build, and finally
+5. upload the build.
 
 ```groovy
     stage('Import Assets') {
@@ -63,7 +68,10 @@ Once everything is installed and running, we're using a [Jenkinsfile](https://je
     }
 ```
 
-### Automatic the testing process
+### Build agent
+
+
+## Automatic the testing process
 We're already running the unit tests before each build. It is a good idea to cover as many potential problems as possible using unit tests. We start with a basic set of consistency checks.
 
 ```csharp
@@ -80,7 +88,7 @@ We're already running the unit tests before each build. It is a good idea to cov
 
 It takes time to develop a comprehensive test suite. A good guideline is to add a test every time a new issue appears in the build. The idea is to write the new test such that it prevents the issue from ever happening again.
 
-### Automating the shipping process
+## Automating the shipping process
 So we now have a build that passed basic checks, but that still doesn't mean much. What we need is *real people* testing it.
 
 ```
