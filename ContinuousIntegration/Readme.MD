@@ -92,6 +92,8 @@ We now have a build that passed basic checks, but that still doesn't mean much. 
 It does not exist until you ship it. --Jonas Bötel
 ```
 
+The good news is that [uploading builds to Steam](https://partner.steamgames.com/doc/sdk/uploading) is reasonably straightforward and well documented.
+
 ```groovy
     stage('Upload Build') {
       steps {
@@ -99,6 +101,8 @@ It does not exist until you ship it. --Jonas Bötel
       }
     }
 ```
+
+Steam keeps all uploaded builds around *forever*, which is super useful when something goes wrong and we have to revert to an earlier build. Let's make sure to upload our builds to a beta branch on Steam though, by setting `setlive` in the `app_build.vdf`. That way our players can opt in to play the latest ~~and greatest~~ builds if they feel brave. Every few weeks, when the build is stable enough, we can promote it to the default branch in Steam's backend.
 
 ## Further reading
 - [Continuous Integration](https://martinfowler.com/articles/continuousIntegration.html) by Martin Fowler
