@@ -25,15 +25,15 @@ We achieve continuous integration and delivery by
 If you're already using [version control](https://en.wikipedia.org/wiki/Version_control) you can skip ahead. Keep using what works for you. If you're not using version control yet, currently your best options are [GitHub Enterprise](https://github.com/enterprise) and [Plastic SCM](https://www.plasticscm.com/). Both [cost](https://github.com/pricing) [money](https://www.plasticscm.com/pricing), but not too much. They are well worth it. Stay away from [Unity Collaborate](https://unity.com/unity/features/collaborate). It doesn't work properly and its feature set is severly limited. It might be useful for game jams, but that's about it.
 
 ## Automating the build process
-If you're using GitHub Enterprise, you might want to give [GitHub Actions](https://github.com/features/actions) a try. [Unity Cloud Build](https://unity3d.com/unity/features/cloud-build) is too basic for anything serious. We'll be using [Jenkins](https://jenkins.io/) here, which is free, open source, and runs locally.
+If you're using GitHub Enterprise, you might want to give [GitHub Actions](https://github.com/features/actions) a try. Don't use [Unity Cloud Build](https://unity3d.com/unity/features/cloud-build), it is too basic for anything serious. We'll be using [Jenkins](https://jenkins.io/) here, which is free, open source, and runs locally.
 
 ### Jenkins
-We connect Jenkins to the repository and tell it to build the project every time a change gets committed. That's a lot of builds, so it's best to [install Jenkins](https://jenkins.io/download/thank-you-downloading-windows-installer-stable/) on an unused machine, which we will use as our build server.
+We connect Jenkins to the repository and tell it to build the project *every time* a change gets committed. That's a lot of builds, so it's best to [install Jenkins](https://jenkins.io/download/thank-you-downloading-windows-installer-stable/) on an unused machine, which we will also use as our build server.
 
-After installing Jenkins and logging in to http://localhost:8080 with the initial admin password, Jenkins will ask which plugins to install. We're going to "Install suggested plugins". We won't need most of them, but it's too tedious to pick plugins manually. Speaking of plugins, everything in Jenkins is a plugin, most of them contributed by volunteers. Most of them are not *production ready*, which is why you will often find several plugins for the same task. We're going to bypass all that keep things as simple as possible.
+After installing Jenkins and logging in to http://localhost:8080 with the initial admin password, Jenkins will ask which plugins to install. We're going to "Install suggested plugins". We won't need most of them, but it's too tedious to pick plugins manually. Speaking of plugins, everything in Jenkins is a plugin, most of them contributed by volunteers. Most of them are not *production ready*, which is why there often are several plugins for the same task, but none of them does what we need.
 
 ### Build job
-To make Jenkins build the game, we need to wrap the build process in a Jenkins job, so let's create a new job using the "Pipeline" template.
+To make Jenkins build the game, we need to wrap the build process in a Jenkins job. We're going to bypass all the plugins and keep things as simple as possible by using the "Pipeline" template.
 
 ![Jenkins welcome page](Documentation/Jenkins1.png "It works!")
 ![Jenkins create job page](Documentation/Jenkins2.png "Pipelines for Mario")
@@ -41,7 +41,7 @@ To make Jenkins build the game, we need to wrap the build process in a Jenkins j
 ![Jenkins pipeline triggers](Documentation/Pipeline2.png)
 ![Jenkins pipeline script](Documentation/Pipeline3.png)
 
-The job configuration in Jenkins is fairly minimal. All we need is for Jenkins to download the [pipeline script](https://jenkins.io/doc/book/pipeline/jenkinsfile/) from our version control system and then execute it.
+The job configuration in Jenkins is fairly minimal. All we need Jenkins to do is to download the [pipeline script](https://jenkins.io/doc/book/pipeline/jenkinsfile/) from our repository and then execute it. We'll put all the details in the script.
 
 In [our pipeline script](BuildScripts/Jenkins/Jenkinsfile), we
 1. update to the latest revision on the repository,
@@ -69,7 +69,7 @@ In [our pipeline script](BuildScripts/Jenkins/Jenkinsfile), we
 ```
 
 ## Automatic the testing process
-We're already running the unit tests before each build. It is a good idea to cover as many potential problems as possible using unit tests. We start with a basic set of consistency checks.
+Now that we're running the unit tests before each build, it is a good idea to cover as many potential problems as possible using unit tests. We start with a basic set of consistency checks.
 
 ```csharp
         [Test]
@@ -83,10 +83,10 @@ We're already running the unit tests before each build. It is a good idea to cov
         }
 ```
 
-It takes time to develop a comprehensive test suite. As a guideline, it's a good idea to add a test each time a new issue appears in the build. The goal is to write the new test in such a way that it prevents the issue from ever happening again.
+It takes time to develop a comprehensive test suite. As a guideline, it's a good idea to write a test each time a new issue appears in the build. The goal is to write the new test in such a way that it prevents that issue from ever happening again.
 
 ## Automating the shipping process
-We now have a build that passed basic checks, but that still doesn't mean much. What we need is *real people* testing it.
+We now have a build that passed some basic checks, but that still doesn't mean much. What we need is *real people* testing it.
 
 ```
 It does not exist until you ship it. --Jonas Bötel
@@ -102,7 +102,7 @@ The good news is that [uploading builds to Steam](https://partner.steamgames.com
     }
 ```
 
-Steam keeps all uploaded builds around *forever*, which is super useful when something goes wrong and we have to revert to an earlier build. Let's make sure to upload our builds to a beta branch on Steam though, by configuring the `setlive` field in the `app_build.vdf`. That way our players can opt in to play the latest ~~and greatest~~ builds if they feel brave. Every few weeks, when the build is stable enough, we can promote it to the default branch in Steam's backend.
+Steam keeps all uploaded builds around *forever*, which is super useful when something goes wrong and we have to revert to an earlier build. On the other hand, we don't really want to risk breaking the game every day. So let's make sure to automatically upload our builds to a *beta* branch on Steam, by configuring the `setlive` field in the `app_build.vdf`. That way our players can opt in to play the latest ~~and greatest~~ builds if they feel brave. Every few weeks, when the build is stable enough, we can release it to the default branch using Steam's backend.
 
 ## Further reading
 - [Continuous Integration](https://martinfowler.com/articles/continuousIntegration.html) by Martin Fowler
