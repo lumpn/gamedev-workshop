@@ -89,7 +89,7 @@ It takes time to develop a comprehensive test suite. As a guideline, it's a good
 We now have a build that passed basic checks, but that still doesn't mean much. What we need is *real people* testing it.
 
 ```
-It does not exist until you ship it. --Jonas
+It does not exist until you ship it. --Jonas Bötel
 ```
 
 ```groovy
