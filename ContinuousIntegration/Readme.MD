@@ -4,7 +4,7 @@ Keep testing. Keep shipping. Catch bugs early.
 ## Problem
 Game assets tend to have lots of dependencies across various disciplines. Projects can easily break when people change things without realizing which other things depend on them. The longer it takes to notice the problem, the longer it takes to identify and fix the change that caused it.
 
-Furthermore, at any given time there's a slightly different work-in-progress version of the project on each developer's machine, making it difficult to reproduce issues seen on another machine. Some issues might even manifest on the target platform only.
+Furthermore, at any given time there's a slightly different work-in-progress version of the project on each developer's machine, making it difficult to reproduce issues seen on another machine. Some issues might even manifest only on the target platform.
 
 ```
 ¯\_(ツ)_/¯
@@ -15,7 +15,7 @@ my machine.
 ## Solution
 We want to reduce the time between making a change and seeing it on the target platform as much as possible. We want to have checks that tell us when something broke. We want to run those checks after every change. That means we have to automate the entire process.
 
-We achive continuous integration and delivery by
+We achieve continuous integration and delivery by
 1. maintaining a single repository,
 2. automating the build process,
 3. automating the testing process, and
@@ -102,7 +102,7 @@ The good news is that [uploading builds to Steam](https://partner.steamgames.com
     }
 ```
 
-Steam keeps all uploaded builds around *forever*, which is super useful when something goes wrong and we have to revert to an earlier build. Let's make sure to upload our builds to a beta branch on Steam though, by setting `setlive` in the `app_build.vdf`. That way our players can opt in to play the latest ~~and greatest~~ builds if they feel brave. Every few weeks, when the build is stable enough, we can promote it to the default branch in Steam's backend.
+Steam keeps all uploaded builds around *forever*, which is super useful when something goes wrong and we have to revert to an earlier build. Let's make sure to upload our builds to a beta branch on Steam though, by configuring the `setlive` field in the `app_build.vdf`. That way our players can opt in to play the latest ~~and greatest~~ builds if they feel brave. Every few weeks, when the build is stable enough, we can promote it to the default branch in Steam's backend.
 
 ## Further reading
 - [Continuous Integration](https://martinfowler.com/articles/continuousIntegration.html) by Martin Fowler
