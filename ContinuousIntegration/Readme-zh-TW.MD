@@ -85,13 +85,13 @@
 要完善一整套測試系統需要投入很多時間。原則上來說，每次專案上出現沒碰過的問題時，大概就是新增一項測試的好時機。撰寫這項新測試的角度，當然就是希望可以防止同一個問題再次發生。
 
 ## 發佈流程自動化
-We now have a build that passed some basic checks, but that still doesn't mean much. What we need is *real people* testing it.
+現在這個建置版本已經通過了我們所設下的一些基礎檢查，但至此尚欠最關鍵的一步。我們需要*真人*來進行測試。
 
 ```
-It does not exist until you ship it. --Jonas Bötel
+「沒有真的發佈的東西，等於不存在。」── Jonas Bötel
 ```
 
-The good news is that [uploading builds to Steam](https://partner.steamgames.com/doc/sdk/uploading) is reasonably straightforward and well documented.
+所幸，[上傳版本到 Steam](https://partner.steamgames.com/doc/sdk/uploading) 的流程還算直觀，而且也有足夠的文件可以查。
 
 ```groovy
     stage('Upload Build') {
@@ -101,13 +101,13 @@ The good news is that [uploading builds to Steam](https://partner.steamgames.com
     }
 ```
 
-Steam keeps all uploaded builds around *forever*, which is super useful when something goes wrong and we have to revert to an earlier build. On the other hand, we don't really want to risk breaking the game every day. So let's make sure to automatically upload our builds to a *beta* branch on Steam, by configuring the `setlive` field in the `app_build.vdf`. That way our players can opt in to play the latest ~~and greatest~~ builds if they feel brave. Every few weeks, when the build is stable enough, we can release it to the default branch using Steam's backend.
+Steam 的政策是在他們的伺服器上*永久*保留任何上傳過的版本，這在發生預期外問題並需要緊急回復舊版的時候非常有用。但話說回頭，我們也不希望冒著玩家每天都有機會玩到爛掉版本的風險。所以切記，這邊自動上傳的版本必須指定到 Steam 上的 *Beta* 分支上，可以透過 `app_build.vdf` 檔案裡的 `setlive` 屬性來進行設定。這樣一來，玩家就可以選擇他們是否真的心臟夠大顆，來試玩最新、~~熱到燙舌頭~~的版本。每隔幾週，當版本確定夠穩定之後，我們可以再透過 Steam 後台去發佈到公開分支去。
 
-## Further reading
+## 延伸閱讀
 - [Continuous Integration](https://martinfowler.com/articles/continuousIntegration.html) by Martin Fowler
 - [Continuous integration and automated testing](http://itmattersgames.com/2019/02/18/continuous-integration-and-automated-testing/) by Michele Krüger
 - [Unite 2015 - Continuous Integration with Unity](https://www.youtube.com/watch?v=kSXomLkMR68) by Jonathan Peppers
 - [Setting Up a Build Server for Unity with Jenkins](https://www.youtube.com/watch?v=4J3SmhGxO1Y) by William Chyr
 
-## Translations
-If you find this workshop useful and speak another language, I'd very much appreciate any help translating the chapters. Clone the repository, add a localized copy of the README.md, for example README-pt-BR.md, and send me a pull request.
+## 翻譯
+如果你覺得這個工作坊有其價值，並通曉另一個語言，我們非常歡迎任何幫助工作坊內容進行翻譯的協助。把本儲存庫內容 clone 下來後，增加一份特定語言在地化的 README.md，例如 README-pt-BR.md，並送 PR 給我們。
