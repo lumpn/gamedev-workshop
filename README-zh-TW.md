@@ -8,7 +8,7 @@
 
 ## 章節
 1. [拆解耦合](/Decoupling/README-zh-TW.md)
-2. [持續整合](/ContinuousIntegration/Readme-zh-TW.MD)
+2. [持續整合](/ContinuousIntegration/README-zh-TW.md)
 
 ## 翻譯
 
