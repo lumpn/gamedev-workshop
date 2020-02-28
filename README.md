@@ -8,6 +8,7 @@ The organizers of the workshop are [Jonas Bötel](https://twitter.com/codelumpn)
 
 ## Chapters
 1. [Decoupling](/Decoupling/)
+2. [Continuous Integration](/ContinuousIntegration/)
 
 ## Translations
 

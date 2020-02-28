@@ -111,4 +111,7 @@ Steam keeps all uploaded builds around *forever*, which is super useful when som
 - [Setting Up a Build Server for Unity with Jenkins](https://www.youtube.com/watch?v=4J3SmhGxO1Y) by William Chyr
 
 ## Translations
+
+- [台灣繁體中文 (zh-TW)](Readme-zh-TW.MD)
+
 If you find this workshop useful and speak another language, I'd very much appreciate any help translating the chapters. Clone the repository, add a localized copy of the README.md, for example README-pt-BR.md, and send me a pull request.
