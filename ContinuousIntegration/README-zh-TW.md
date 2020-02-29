@@ -50,21 +50,32 @@
 5. 最後，把建置完成的版本上傳
 
 ```groovy
-    stage('Import Assets') {
-      steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -quit -accept-apiupdate"
-      }
+  environment {
+    GIT = '"C:\\Program Files\\Git\\bin\\git.exe"'
+    UNITY = '"C:\\Program Files\\Unity\\Hub\\Editor\\2018.4.14f1\\Editor\\Unity.exe"'
+    PROJECT = 'ContinuousIntegration'
+    PLATFORM = 'Win64'
+    OUTPUT = 'Build/ContinuousIntegration.exe'
+    STEAMCMD = '"W:\\Jenkins\\steamworks\\tools\\ContentBuilder\\builder\\steamcmd.exe"'
+    STEAMUSERNAME = 'steam_username_here'
+    STEAMPASSWORD = 'steam_password_here'
+    STEAMSCRIPT = '"ContinuousIntegration\\BuildScripts\\Steam\\app_build.vdf"'
+  }
+  stage('Import Assets') {
+    steps {
+      bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -quit -accept-apiupdate"
     }
-    stage('Run Unit Tests') {
-      steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -runEditorTests"
-      }
+  }
+  stage('Run Unit Tests') {
+    steps {
+      bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -runEditorTests"
     }
-    stage('Build') {
-      steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -quit -buildWindows64Player $OUTPUT"
-      }
+  }
+  stage('Build') {
+    steps {
+      bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -quit -buildWindows64Player $OUTPUT"
     }
+  }
 ```
 
 ## 測試流程自動化
