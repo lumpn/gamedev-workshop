@@ -112,6 +112,10 @@ Steam keeps all uploaded builds around *forever*, which is super useful when som
 
 ## Translations
 
+<<<<<<< HEAD:ContinuousIntegration/Readme.MD
 - [台灣繁體中文 (zh-TW)](Readme-zh-TW.MD)
+=======
+- [台灣繁體中文 (zh-TW)](README-zh-TW.md)
+>>>>>>> 95b306eceae82aa382e5bc08ed941cbbd470a160:ContinuousIntegration/README.md
 
 If you find this workshop useful and speak another language, I'd very much appreciate any help translating the chapters. Clone the repository, add a localized copy of the README.md, for example README-pt-BR.md, and send me a pull request.
