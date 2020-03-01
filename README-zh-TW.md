@@ -10,6 +10,9 @@
 1. [拆解耦合](/Decoupling/README-zh-TW.md)
 2. [持續整合](/ContinuousIntegration/README-zh-TW.md)
 
+## Feedback form
+[Feedback form](https://docs.google.com/forms/d/e/1FAIpQLSd3JzkFGXOSWr9CyA7mSWUG8hzvDvHoThYw_CLs8pvduKAcNw/viewform)
+
 ## 翻譯
 
 如果你覺得這個工作坊有其價值，並通曉另一個語言，我們非常歡迎任何幫助工作坊內容進行翻譯的協助。把 repository clone 下來後，增加一份特定語言在地化的 README.md，例如 README-pt-BR.md，並送 PR 給我們。

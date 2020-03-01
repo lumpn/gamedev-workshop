@@ -10,6 +10,9 @@ The organizers of the workshop are [Jonas Bötel](https://twitter.com/codelumpn)
 1. [Decoupling](/Decoupling/)
 2. [Continuous Integration](/ContinuousIntegration/)
 
+## Feedback form
+[Feedback form](https://docs.google.com/forms/d/e/1FAIpQLSf6zky6QtlwzFEXGlWpW-WGGYXcCrcWLTk7e5Q2eeODSU_JiQ/viewform)
+
 ## Translations
 
 - [台灣繁體中文 (zh-TW)](README-zh-TW.md)
