@@ -10,7 +10,7 @@
 
 ## Correctness
 - ScriptableObject instead of CSV, json, etc.
-- [Required] attribute
+- Required attribute
 - Broken reference check
 - Code reviews
 - Tests and simulations
@@ -52,6 +52,11 @@
 - Post processing effects
 - Mentoring
 - UML
+- Serializable attribute
+- Hot reload
+- sealed keyword
+- ContextMenu attribute
+- TRANSFORM context menu
 
 ## CI
 
@@ -93,7 +98,7 @@ Better yet, add a local agent. Start like Launch agent via execution of command 
 9. Manage Jenkins -> Global Security -> Agents -> TCP port for inbound agents: random
 10. Manage Jenkins -> Manage Nodes -> New Node (name Agent1, permanent agent, keep defaults)
 11. Manage Jenkins -> Manage Nodes -> Agent1 -> agent.jar save file.
-12. Create batch file "c:\Program Files (x86)\Jenkins\jre\bin\java" -jar agent.jar -jnlpUrl http://localhost:8080/computer/Agent1/slave-agent.jnlp -secret 7a729911603e5918b83052a24e7258dc26ad85359831d6e040d0999f5de5eb8b 
+12. Create batch file "c:\Program Files (x86)\Jenkins\jre\bin\java" -jar agent.jar -jnlpUrl http://localhost:8080/computer/Agent1/slave-agent.jnlp -secret 7a729911603e5918b83052a24e7258dc26ad85359831d6e040d0999f5de5eb8b
 13. Install as service...
 
 14. Manage Jenkins -> Global Tool Configuration -> Git -> Delete -> Add Git -> JGit
