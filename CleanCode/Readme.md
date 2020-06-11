@@ -1,3 +1,6 @@
+# Clean code for Unity
+An attempt to list what works well and what doesn't. Mostly scars.
+
 # Platform specific code
 ```csharp
 #if UNITY_PS4
