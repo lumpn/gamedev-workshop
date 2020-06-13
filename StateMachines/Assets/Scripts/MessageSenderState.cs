@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class MessageSender : StateMachineBehaviour
+public sealed class MessageSenderState : StateMachineBehaviour
 {
     [SerializeField] private Message onEnter;
     [SerializeField] private Message onExit;
