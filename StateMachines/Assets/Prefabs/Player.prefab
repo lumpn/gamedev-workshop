@@ -84,7 +84,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1710766984241354305}
-          m_MethodName: LogMessage
+          m_MethodName: SendMessage
           m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
