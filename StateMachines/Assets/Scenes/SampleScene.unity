@@ -509,6 +509,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8842019508977808860, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
+        type: 3}
+      propertyPath: handlers.Array.data[1].event.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842019508977808860, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
+        type: 3}
+      propertyPath: handlers.Array.data[1].event.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842019508977808860, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
+        type: 3}
+      propertyPath: handlers.Array.data[1].event.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842019508977808860, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
+        type: 3}
+      propertyPath: handlers.Array.data[1].event.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1847263891}
+    - target: {fileID: 8842019508977808860, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
+        type: 3}
+      propertyPath: handlers.Array.data[1].event.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842019508977808860, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
+        type: 3}
+      propertyPath: handlers.Array.data[1].event.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 9173783060021865945, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
         type: 3}
       propertyPath: m_Name
@@ -537,7 +567,7 @@ PrefabInstance:
     - target: {fileID: 9173783060021865950, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9173783060021865950, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
         type: 3}
@@ -547,7 +577,7 @@ PrefabInstance:
     - target: {fileID: 9173783060021865950, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9173783060021865950, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
         type: 3}
@@ -562,7 +592,7 @@ PrefabInstance:
     - target: {fileID: 9173783060021865950, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 9173783060021865950, guid: aa3a98069cad5b5469c1a4c6c77cfcd0,
         type: 3}
