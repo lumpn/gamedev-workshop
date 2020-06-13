@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Playables;
 
 public sealed class PlayableDirectorState : StateMachineBehaviour
@@ -15,32 +15,34 @@ public sealed class PlayableDirectorState : StateMachineBehaviour
     [SerializeField] private PlayableAsset playableAsset;
     [SerializeField] private Action onEnter, onExit;
 
+    private PlayableGraph graph;
     private Playable playable;
 
-    void OnEnable()
+    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        var graph = PlayableGraph.Create("JonasWasHere");
-        var owner = new GameObject("Owner");
-        playable = playableAsset.CreatePlayable(graph, owner);
+        HandleAction(onEnter, animator);
     }
 
-    void OnStateEnter()
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        HandleAction(onEnter);
+        HandleAction(onExit, animator);
     }
 
-    void OnStateExit()
+    private void HandleAction(Action action, Animator animator)
     {
-        HandleAction(onExit);
-    }
+        if (action == Action.None) return;
 
-    private void HandleAction(Action action)
-    {
+        // ensure playable
+        if (!playable.IsValid())
+        {
+            graph = PlayableGraph.Create();
+            playable = playableAsset.CreatePlayable(graph, animator.gameObject);
+        }
+
         switch (action)
         {
-            case Action.None: break;
-            case Action.Play: playable.Play(); break;
-            case Action.Stop: playable.Pause(); break;
+            case Action.Play: graph.Play(); break;
+            case Action.Stop: graph.Stop(); break;
             case Action.Pause: playable.Pause(); break;
             case Action.Resume: playable.Play(); break;
             default: Debug.LogErrorFormat("Unhandled action {0}", action); break;
