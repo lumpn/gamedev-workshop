@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class JumpHandler : MonoBehaviour
+public sealed class JumpControllerMessageHandler : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float jumpVelocity;

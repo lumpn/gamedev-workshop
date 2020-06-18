@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class JumpController : MonoBehaviour
+public sealed class JumpControllerParameterProvider : MonoBehaviour
 {
     private static readonly int onGroundId = Animator.StringToHash("OnGround");
     private static readonly int jumpButtonId = Animator.StringToHash("JumpButton");
