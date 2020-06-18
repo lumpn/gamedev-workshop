@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public sealed class JumpController : MonoBehaviour
 {
