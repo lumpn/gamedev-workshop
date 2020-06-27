@@ -1,11 +1,43 @@
 # State Machines
-Visual scripting.
+Avoid spaghetti code. Everything is a state machine. Decouple state from logic.
 
 # Problem
-An object should change its behavior when its internal state changes.
-Spaghetti code.
+An object should change its behavior when its internal state changes. That sounds very abstract, but it's a very common pattern in game code. Let's look at some examples.
+
+1. Input handling: In a fighting game, pressing the *Punch* button should throw a different punch depending on whether the player is moving forward, backward, standing still, jumping, or ducking.
+2. AI characters: Bots should react differently when spotting the player depending on their current health, weapons, and number of other bots nearby.
+3. Game controller: Whether the ability to quit, pause, or save a game is available should depend on whether the game is loading, saving, paused, running, or quitting,
+
+Once you get more familiar with the pattern, you will start seeing it everywhere.
+
+The problem starts when you try to implement a state machine. It quickly looks like spaghetti code.
+
+```csharp
+if (Input.GetButton("Punch")) {
+    if (player.velocity.z > 0) {
+        ForwardPunch();
+    } else if (player.velocity.z < 0) {
+        Grapple();
+    } else if (player.isJumping) {
+        if (Input.GetAxis("Vertical") > 0) {
+            UpwardPunch();
+        } else {
+            DownwardPunch();
+        }
+    } else if (player.isDucking) {
+        UpwardPunch();
+    } else {
+        StandingPunch();
+    }
+}
+```
+Not only is the above code hard to understand, it's also incomplete and contains at least one bug.
 
 # Solution
+Every branch in your code represents a different state. Draw them on a piece of paper and connect them with arrows representing the state changes.
+
+// TODO Jonas: graphviz
+![State machine](https://upload.wikimedia.org/wikipedia/commons/9/9e/Turnstile_state_machine_colored.svg)
 - Animator instead of code
 - Visualization
 
