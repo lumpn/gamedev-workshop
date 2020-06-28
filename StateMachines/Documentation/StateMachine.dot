@@ -1,0 +1,24 @@
+digraph G {
+
+MovingForward [label="Moving\nForward"];
+MovingBackward [label="Moving\nBackward"];
+JumpingHoldingUp [label="Jumping\n(Holding Up)"]
+
+JumpingHoldingUp -> Jumping;
+Jumping -> JumpingHoldingUp [constraint=false];
+Jumping -> Standing;
+Standing -> Jumping [constraint=false];
+
+Standing -> MovingBackward;
+MovingBackward -> Standing [constraint=false];
+
+Standing -> Ducking;
+Ducking -> Standing [constraint=false];
+
+Standing -> MovingForward;
+MovingForward -> Standing [constraint=false];
+
+{rank=same;MovingForward;MovingBackward;Ducking}
+MovingBackward->Ducking->MovingForward [style=invis];
+
+}

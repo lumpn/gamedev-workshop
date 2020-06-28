@@ -36,15 +36,18 @@ Not only is the above code hard to understand, it's also incomplete and contains
 # Solution
 Every branch in your code represents a different state. Draw them on a piece of paper and connect them with arrows representing the state changes.
 
-// TODO Jonas: graphviz
-![State machine](https://upload.wikimedia.org/wikipedia/commons/9/9e/Turnstile_state_machine_colored.svg)
-- Animator instead of code
-- Visualization
+![State machine](./Documentation/StateMachine.png "Looks familiar?")
+
+ The hard part is making sure all the state changes are in the right place and getting triggered correctly, but that's independent from implementing what the *Punch* button is doing in each state.
+
+Okay, so now that we know the *shape* of the problem, how do we implement it?
+
+## Animators
+The graph above looks a lot like an [animator controller](https://docs.unity3d.com/Manual/Animator.html) in Unity. And that's exactly what we are going to use, because it turns out an animator controller can do so much more than just playing a bunch of animations. Let's walk through an example to see how it works.
 
 # Example
-Finite state machines are useful when you have an entity whose behavior changes based on some internal state, that state can be rigidly divided into one of a relatively small number of distinct options, and the entity responds to a series of inputs or events over time.
+Suppose we are implementing input handling for a Jump 'n' Run game. 
 
-In games, they are most known for being used in AI, but they are also common in implementations of user input handling, navigating menu screens, parsing text, network protocols, and other asynchronous behavior.
 
 ## Jump controller
 ![Jump controller](./Documentation/JumpController.png "Jump around!")
@@ -62,3 +65,8 @@ In games, they are most known for being used in AI, but they are also common in 
 - [Unite 2015 - Applied Mecanim : Character Animation and Combat State Machines](https://www.youtube.com/watch?v=Is9C4i4XyXk) by Aaron Horne
 - [Advanced AI in Unity (made easy) - State Machine Behaviors](https://www.youtube.com/watch?v=dYi-i83sq5g) by Noa Calice
 - [Game Programming Patterns - State](http://gameprogrammingpatterns.com/state.html) by Bob Nystrom
+
+# Translations
+- [台灣繁體中文 (zh-TW)](README-zh-TW.md)
+
+If you find this workshop useful and speak another language, I'd very much appreciate any help translating the chapters. Clone the repository, add a localized copy of the README.md, for example README-pt-BR.md, and send me a pull request.

@@ -1,7 +1,7 @@
 # Decoupling
 Requirements change. Software evolves. Stay flexible through separation of concerns.
 
-## Problem
+# Problem
 Tight coupling between modules of a system means that it is
 - difficult to reason about individual components in isolation,
 - difficult to test individual components in isolation, and
@@ -11,22 +11,22 @@ All of which make it difficult to understand, maintain, and evolve both individu
 
 ![Tangled strings](https://cdn.pixabay.com/photo/2016/06/28/10/49/thread-1484387_640.jpg "Good luck figuring it out.")
 
-## Solution
+# Solution
 We want our components to be [modular](https://en.wikipedia.org/wiki/Modular_programming) in order to be able to reason about, test, and reuse each of them individually. Modular components are easier to change or to replace, allowing our system to stay flexible and able to adapt to changing requirements. We achieve modularization by decoupling dependencies and defining minimal interfaces.
 
 ![Lego bricks](https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Lego_bricks.jpg/640px-Lego_bricks.jpg "Be LEGO, my friend.")
 
-## Example
+# Example
 Suppose we're making a game like [Diablo](https://en.wikipedia.org/wiki/Diablo_(video_game)) where we have a player character and a UI showing the player's current health and mana. How do we connect the health bar to the player's health value? The two components are on totally different game objects!
 
-### Singletons
+## Singletons
 We realize there can only be one player character and one UI in our game. That means we can apply the [singleton pattern](https://en.wikipedia.org/wiki/Singleton_pattern) to access the other component. [So smart!](https://youtu.be/wv4eTE0aUiQ)
 
 ```csharp
 public sealed class Player : MonoBehaviour
 {
     public static Player main { get; private set; }
-    
+
     public float maxHealth;
     public float health;
 
@@ -34,7 +34,7 @@ public sealed class Player : MonoBehaviour
     {
         main = this;
     }
-    
+
     // ...
 }
 ```
@@ -63,7 +63,7 @@ Okay, perhaps not so easy anymore. It is then, that our game designer comes up w
 
 How about let's not do that. What if I told you, each component can be isolated, modular, and still share information with other components? Enter [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection)!
 
-### Dependency injection
+## Dependency injection
 So we start reading about [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection), [separation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns), and [inversion of control](https://en.wikipedia.org/wiki/Inversion_of_control), and it's a lot of fancy talk and it seems really complicated and we have to download extra frameworks to make it work or switch to a new language entirely (hah, hah, *sigh*).
 
 The key insight here is to realize that the [inspector in Unity](https://docs.unity3d.com/Manual/UsingTheInspector.html) *is* a dependency injector. In fact, we've already been using it to inject dependencies. In the [example above](#singletons) the `HealthBar` component's reference to the UI `Slider` *is* a dependency that we *injected* using the inspector. It's as simple as assigning a field. Crazy, right? But that's all there is to dependency injection, really.
@@ -73,7 +73,7 @@ public sealed class Player : MonoBehaviour
 {
     public float maxHealth;
     public float health;
-    
+
     // Look ma, no singleton!
     // ...
 }
@@ -107,7 +107,7 @@ Later on, we want to clean things up a bit by moving our UI into its own scene w
 
 Not so fast!
 
-### ScriptableObjects
+## ScriptableObjects
 Today's second insight is, that we can inject not only references to other components, but also to `ScriptableObject`s, which are [data containers we can use to store data, *independent of class instances*](https://docs.unity3d.com/Manual/class-ScriptableObject.html). Does that mean we can store the player's health independent of the `Player` component? It does! Does that mean we can reference the player's health independent of the `Player` component? Yes, it does! Let's take it for a spin.
 
 ```csharp
@@ -139,7 +139,7 @@ public sealed class Player : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private BoundedFloat health;
     [SerializeField] private BoundedFloat mana;
-    
+
     // ...
 }
 ```
@@ -162,14 +162,14 @@ We can also throw the UI into an empty scene, hook it up to some fake data, and 
 
 We haven't even started implementing all the other components for our game, but we're already reusing code. We only need one script for both status bars and we have a feeling that our `BoundedFloat` will come in handy for lots of other stats and attributes in the future.
 
-## Refactoring
+# Refactoring
 One beautiful thing about dependency injection is that we can apply it to existing projects as well. We don't have to start over. We can gradually carve out individual components by moving dependent data into `ScriptableObject`s and replacing direct references between components with references to data, step by step. Once we have completely decoupled one component, we can test and refactor it easily in isolation.
 
-## Further reading
+# Further reading
 - [Unite Austin 2017 - Game Architecture with Scriptable Objects](https://youtu.be/raQ3iHhE_Kk) by [@roboryantron](https://github.com/roboryantron)
 - [Unite 2016 - Overthrowing the MonoBehaviour Tyranny in a Glorious Scriptable Object Revolution](https://youtu.be/6vmRwLYWNRo) by [@richard-fine](https://github.com/richard-fine)
 
-## Translations
+# Translations
 - [台灣繁體中文 (zh-TW)](README-zh-TW.md)
 
 If you find this workshop useful and speak another language, I'd very much appreciate any help translating the chapters. Clone the repository, add a localized copy of the README.md, for example README-pt-BR.md, and send me a pull request.
