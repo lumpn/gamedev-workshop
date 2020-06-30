@@ -63,15 +63,27 @@ Let's look at the `On Ground` state. When the player presses the *Jump* button w
 
 If we transitioned back to `On Ground` straight from `Falling` as soon as the player touches ground, we would end up in a situation where the player would keep bouncing up and down like on a trampoline simply by keeping the *Jump* button pressed, because our state machine would immediately transition back to `Start Jump`. To fix that, we have to add an intermediary state `On Ground (still holding Jump)`.
 
-Wow, jumping is hard. There is a lot of logic in our state machine already and we have only covered the basics so far. You can see how this would have been a lot of spaghetti code already.
+Wow, jumping is hard. There is a lot of logic in our state machine already and we have only covered the basics so far. We can see how this would have been a lot of spaghetti code already.
+
+## TODO Code
 
 ## Coyote time
 ![Coyote time](./Documentation/CoyoteTime.png "Meep meep!")
 
-Fortunately, laying the groundworks was the hard part already. Adding [coyote time](https://celestegame.fandom.com/wiki/Moves#Coyote_Time) is simply a matter of adding one more state.
+Fortunately, laying the groundworks was the hard part already. Adding [coyote time](https://celestegame.fandom.com/wiki/Moves#Coyote_Time) is simply a matter of adding one more state with a very short timeout of 50 milliseconds. Even though the player character is not technically on ground anymore, we still allow them to perform a jump for a few frames. [Game feel](https://youtu.be/OfSpBoA6TWw?t=833)!
+
+Perhaps most surprisingly, we don't need to touch any code at all. Everything happens still happens in `Start Jump` and `Stop Jump` just like before. It just works.
 
 ## Double jump
 ![Double jump](./Documentation/DoubleJump.png "If at first you don't succeed, jump again.")
+
+Double jumping means we give the player a second jump when falling. How does the second jump work? Just like the first jump. So let's copy the relevant states, put them to the right of `Falling`, and connect them up. The *shape* of the problem stays the same.
+
+All we have to do to make it work is making sure that the *Jump* button is not being held before we do the second jump, because otherwise we would have the same trampoline problem we had in the very beginning. And just like before, we solve it by adding an intermediary state `Falling (still holding Jump)`.
+
+In terms of code, again, we don't have to do anything at all. It just works.
+
+Now we can really see the benefit of decoupling the state handling logic from the jump physics implementation. The state machine was the hard part. And that's good, because we use an animator controller to represent our state machine and animator controllers are super easy to debug. Press play and Unity shows you exactly which state is currently active. Compare that to what you see in game and you will spot the bug immediately.
 
 ## Footnotes
 
