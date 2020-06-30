@@ -46,18 +46,38 @@ Okay, so now that we know the *shape* of the problem, how do we implement it?
 The graph above looks a lot like an [animator controller](https://docs.unity3d.com/Manual/Animator.html) in Unity. And that's exactly what we are going to use, because it turns out an animator controller can do so much more than just playing a bunch of animations. Let's walk through an example to see how it works.
 
 # Example
-Suppose we are implementing input handling for a Jump 'n' Run game. 
-
+Suppose we are implementing input handling for a Jump 'n' Run game instead of a fighting game. We want to support genre staples like
+1. variable jump height depending on how long the player holds the *Jump* button,
+2. [coyote time](https://celestegame.fandom.com/wiki/Moves#Coyote_Time), and
+3. double jump.
 
 ## Jump controller
 ![Jump controller](./Documentation/JumpController.png "Jump around!")
+We start by creating a new animator controller. Our boolean input parameters are whether the *Jump* button is pressed and whether the player is currently on the ground.
+
+Our first state is `On Ground`. That is when the player is able to jump at all. We also need the opposite state, which is `Falling`, and then a few more states which become clearer when we look at the conditions for the state transitions.
+
+![Jump controller with annotations](./Documentation/JumpController2.png "Spot the bug?")
+
+Let's look at the `On Ground` state. When the player presses the *Jump* button we start a jump. When the player releases the *Jump* button, we stop the jump by running some game logic to make sure the player character doesn't rise much higher anymore. We then immediately transition to the `Falling` state and we keep falling until the player character touches ground again.
+
+If we transitioned back to `On Ground` straight from `Falling` as soon as the player touches ground, we would end up in a situation where the player would keep bouncing up and down like on a trampoline simply by keeping the *Jump* button pressed, because our state machine would immediately transition back to `Start Jump`. To fix that, we have to add an intermediary state `On Ground (still holding Jump)`.
+
+Wow, jumping is hard. There is a lot of logic in our state machine already and we have only covered the basics so far. You can see how this would have been a lot of spaghetti code already.
 
 ## Coyote time
 ![Coyote time](./Documentation/CoyoteTime.png "Meep meep!")
 
+Fortunately, laying the groundworks was the hard part already. Adding [coyote time](https://celestegame.fandom.com/wiki/Moves#Coyote_Time) is simply a matter of adding one more state.
+
 ## Double jump
 ![Double jump](./Documentation/DoubleJump.png "If at first you don't succeed, jump again.")
 
+## Footnotes
+
+We should split the transition outgoing from `Falling`. One should go directly to `On Ground` under the condition `+OnGround, -JumpButton` and the other one should go to `On Ground (still holding Jump)` under the condition `+OnGround, +JumpButton`. However, in this particular case we can get by with just one transition, because we know we won't actually *do* anything in the intermediary state, and the animator will immediately transition out of it, if the *Jump* button isn't actually being held.
+
+There's also a bug where we don't transition back to `Falling` when walking over the edge of the current platform while begin in `On Ground (still holding Jump)`. It was difficult to spot at the beginning because it only matters once we have double jump.
 
 ## References
 
