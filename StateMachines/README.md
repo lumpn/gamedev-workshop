@@ -10,7 +10,7 @@ An object should change its behavior when its internal state changes. That sound
 
 Once you get more familiar with the pattern, you will start seeing it everywhere.
 
-The problem starts when you try to implement a state machine. It quickly looks like spaghetti code.
+The problem starts when you try to implement a state machine in code. It quickly looks like spaghetti code.
 
 ```csharp
 if (Input.GetButton("Punch")) {
@@ -31,6 +31,7 @@ if (Input.GetButton("Punch")) {
     }
 }
 ```
+
 Not only is the above code hard to understand, it's also incomplete and contains at least one bug.
 
 # Solution
@@ -65,7 +66,75 @@ If we transitioned back to `On Ground` straight from `Falling` as soon as the pl
 
 Wow, jumping is hard. There is a lot of logic in our state machine already and we have only covered the basics so far. We can see how this would have been a lot of spaghetti code already.
 
-## TODO Code
+### Providing parameters
+```csharp
+public class JumpControllerParameterProvider : MonoBehaviour
+{
+    private bool onGround;
+
+    void Update()
+    {
+        animator.SetBool("OnGround", onGround);
+        animator.SetBool("JumpButton", Input.GetButton("Jump"));
+    }
+
+    void FixedUpdate()
+    {
+        onGround = Physics.SphereCast(rigidbody.position, radius, Vector3.down,
+                              out RaycastHit hitInfo, distance, groundLayerMask);
+    }
+}  
+```
+
+### Sending messages
+```csharp
+public class SendMessageState : StateMachineBehaviour
+{
+    public string onEnter, onExit;
+
+    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (!string.IsNullOrEmpty(onEnter)) animator.SendMessage(onEnter);
+    }
+
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (!string.IsNullOrEmpty(onExit)) animator.SendMessage(onExit);
+    }
+}
+```
+
+### Handling messages
+```csharp
+public class JumpControllerMessageHandler : MonoBehaviour
+{
+    private bool startJump, stopJump;
+
+    void StartJump() { startJump = true; }
+    void StopJump()  { stopJump  = true; }
+
+    void FixedUpdate()
+    {
+        if (startJump)
+        {
+            // apply enough force to cancel out any downward momentum
+            // the player might have and launch the player into the air.
+            var downVelocity = Mathf.Min(rigidbody.velocity.y, 0);
+            var deltaVelocity = new Vector3(0, jumpVelocity - downVelocity, 0);
+            rigidbody.AddForce(deltaVelocity, ForceMode.VelocityChange);
+            startJump = false;
+        }
+        if (stopJump)
+        {
+            // apply just enough force to cancel any upward momentum.
+            var upVelocity = Mathf.Max(rigidbody.velocity.y, 0);
+            var deltaVelocity = new Vector3(0, -upVelocity, 0);
+            rigidbody.AddForce(deltaVelocity, ForceMode.VelocityChange);
+            stopJump = false;
+        }
+    }
+}
+```
 
 ## Coyote time
 ![Coyote time](./Documentation/CoyoteTime.png "Meep meep!")
@@ -97,6 +166,7 @@ There's also a bug where we don't transition back to `Falling` when walking over
 - [Unite 2015 - Applied Mecanim : Character Animation and Combat State Machines](https://www.youtube.com/watch?v=Is9C4i4XyXk) by Aaron Horne
 - [Advanced AI in Unity (made easy) - State Machine Behaviors](https://www.youtube.com/watch?v=dYi-i83sq5g) by Noa Calice
 - [Game Programming Patterns - State](http://gameprogrammingpatterns.com/state.html) by Bob Nystrom
+- [Tips and Tricks for good platforming games](http://www.davetech.co.uk/gamedevplatformer) by David Strachan
 
 # Translations
 - [台灣繁體中文 (zh-TW)](README-zh-TW.md)
