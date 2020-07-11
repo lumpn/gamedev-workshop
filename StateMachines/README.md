@@ -114,7 +114,7 @@ public class SendMessageState : StateMachineBehaviour
 ```
 
 ### Handling messages
-Finally we need TODO
+Finally we need a script to receive the messages sent by the animator controller and apply the appropriate game logic, in this case physics.
 
 ```csharp
 public class JumpControllerMessageHandler : MonoBehaviour
@@ -148,28 +148,22 @@ public class JumpControllerMessageHandler : MonoBehaviour
 ```
 
 ## Coyote time
-![Coyote time](./Documentation/CoyoteTime.png "Meep meep!")
-
 Fortunately, laying the groundworks was the hard part already. Adding [coyote time](https://celestegame.fandom.com/wiki/Moves#Coyote_Time) is simply a matter of adding one more state with a very short timeout of 50 milliseconds. Even though the player character is not technically on ground anymore, we still allow them to perform a jump for a few frames. [Game feel](https://youtu.be/OfSpBoA6TWw?t=833)!
+
+![Coyote time](./Documentation/CoyoteTime.png "Meep meep!")
 
 Perhaps most surprisingly, we don't need to touch any code at all. Everything happens still happens in `Start Jump` and `Stop Jump` just like before. It just works.
 
 ## Double jump
-![Double jump](./Documentation/DoubleJump.png "If at first you don't succeed, jump again.")
-
 Double jumping means we give the player a second jump when falling. How does the second jump work? Just like the first jump. So let's copy the relevant states, put them to the right of `Falling`, and connect them up. The *shape* of the problem stays the same.
 
 All we have to do to make it work is making sure that the *Jump* button is not being held before we do the second jump, because otherwise we would have the same trampoline problem we had in the very beginning. And just like before, we solve it by adding an intermediary state `Falling (still holding Jump)`.
 
+![Double jump](./Documentation/DoubleJump.png "If at first you don't succeed, jump again.")
+
 In terms of code, again, we don't have to do anything at all. It just works.
 
 Now we can really see the benefit of decoupling the state handling logic from the jump physics implementation. The state machine was the hard part. And that's good, because we use an animator controller to represent our state machine and animator controllers are super easy to debug. Press play and Unity shows you exactly which state is currently active. Compare that to what you see in game and you will spot the bug immediately.
-
-## Footnotes
-
-We should split the transition outgoing from `Falling`. One should go directly to `On Ground` under the condition `+OnGround, -JumpButton` and the other one should go to `On Ground (still holding Jump)` under the condition `+OnGround, +JumpButton`. However, in this particular case we can get by with just one transition, because we know we won't actually *do* anything in the intermediary state, and the animator will immediately transition out of it, if the *Jump* button isn't actually being held.
-
-There's also a bug where we don't transition back to `Falling` when walking over the edge of the current platform while begin in `On Ground (still holding Jump)`. It was difficult to spot at the beginning because it only matters once we have double jump.
 
 ## References
 
