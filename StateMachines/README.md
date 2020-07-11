@@ -56,6 +56,7 @@ Suppose we are implementing input handling for a Jump 'n' Run platforming game. 
 
 ## Jump controller
 ![Jump controller](./Documentation/JumpController.png "Jump around!")
+
 We start by creating a new animator controller. Our boolean input parameters are whether the *Jump* button is pressed and whether the player is currently on the ground.
 
 Our first state is `On Ground`. That is when the player is able to jump at all. We also need the opposite state, which is `Falling`, and then a few more states which become clearer when we look at the conditions for the state transitions.
