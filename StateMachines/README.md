@@ -8,9 +8,7 @@ An object should change its behavior when its internal state changes. That sound
 2. AI characters: Bots should react differently when spotting the player depending on their current health, weapons, and number of other bots nearby.
 3. Game controller: Whether the ability to quit, pause, or save a game is available should depend on whether the game is loading, saving, paused, running, or quitting,
 
-Once you get more familiar with the pattern, you will start seeing it everywhere.
-
-The problem starts when you try to implement a state machine in code. It quickly looks like spaghetti code.
+What's common about these systems is that they tend to be full of special cases. Implementing the logic to handle each special case quickly turns our solution into spaghetti code.
 
 ```csharp
 if (Input.GetButton("Punch")) {
@@ -32,25 +30,29 @@ if (Input.GetButton("Punch")) {
 }
 ```
 
-Not only is the above code hard to understand, it's also incomplete and contains at least one bug.
+At this point our game designer tells us pressing the *Punch* immediately after standing up after ducking for two seconds should throw a dragon uppercut. Oh and double-tapping *Punch* in air while rising should throw a fireball.
+
+```
+(╯°□°）╯︵ ┻━┻
+```
 
 # Solution
-Every branch in your code represents a different state. Draw them on a piece of paper and connect them with arrows representing the state changes.
+Special cases are the same as states. Every branch in your code represents a different state. Draw them on a piece of paper and connect them with arrows representing the state changes. Once you get more familiar with the pattern, you will start seeing it everywhere.
 
-![State machine](./Documentation/StateMachine.png "Looks familiar?")
+![State machine](./Documentation/StateMachine.png "Where have I seen this before?")
 
- The hard part is making sure all the state changes are in the right place and getting triggered correctly, but that's independent from implementing what the *Punch* button is doing in each state.
+The hard part is making sure all the state changes are in the right place and getting triggered correctly, but that's independent from implementing what the *Punch* button is doing in each state. We're decoupling the state handling from the action handling, which allows us to reason about each of them in isolation.
 
 Okay, so now that we know the *shape* of the problem, how do we implement it?
 
 ## Animators
-The graph above looks a lot like an [animator controller](https://docs.unity3d.com/Manual/Animator.html) in Unity. And that's exactly what we are going to use, because it turns out an animator controller can do so much more than just playing a bunch of animations. Let's walk through an example to see how it works.
+The graph above looks a lot like an [animator controller](https://docs.unity3d.com/Manual/Animator.html) in Unity. And, in fact, that's exactly what we are going to use, because it turns out that an animator controller can do so much more than playing animations. Let's walk through an example to see how it works.
 
 # Example
-Suppose we are implementing input handling for a Jump 'n' Run game instead of a fighting game. We want to support genre staples like
-1. variable jump height depending on how long the player holds the *Jump* button,
-2. [coyote time](https://celestegame.fandom.com/wiki/Moves#Coyote_Time), and
-3. double jump.
+Suppose we are implementing input handling for a Jump 'n' Run platforming game. We want to support [genre staples](https://celestegame.fandom.com/wiki/Moves) like
+1. variable jump height that depends on how long the player holds the *Jump* button,
+2. [coyote time](https://twitter.com/DavesInHisPants/status/1281189584462917632) which allows the player to jump after running off an edge, and
+3. double jump, a second jump while in mid air.
 
 ## Jump controller
 ![Jump controller](./Documentation/JumpController.png "Jump around!")
@@ -58,15 +60,16 @@ We start by creating a new animator controller. Our boolean input parameters are
 
 Our first state is `On Ground`. That is when the player is able to jump at all. We also need the opposite state, which is `Falling`, and then a few more states which become clearer when we look at the conditions for the state transitions.
 
-![Jump controller with annotations](./Documentation/JumpController2.png "Spot the bug?")
+![Jump controller with transition conditions](./Documentation/JumpController2.png "Spot the bug?")
 
 Let's look at the `On Ground` state. When the player presses the *Jump* button we start a jump. When the player releases the *Jump* button, we stop the jump by running some game logic to make sure the player character doesn't rise much higher anymore. We then immediately transition to the `Falling` state and we keep falling until the player character touches ground again.
 
 If we transitioned back to `On Ground` straight from `Falling` as soon as the player touches ground, we would end up in a situation where the player would keep bouncing up and down like on a trampoline simply by keeping the *Jump* button pressed, because our state machine would immediately transition back to `Start Jump`. To fix that, we have to add an intermediary state `On Ground (still holding Jump)`.
 
-Wow, jumping is hard. There is a lot of logic in our state machine already and we have only covered the basics so far. We can see how this would have been a lot of spaghetti code already.
+Wow, jumping is hard. There is a lot of logic in our state machine already and we have only covered the basic variable jump height so far. We can see how this would have been a lot of spaghetti code already.
 
 ### Providing parameters
+For our jump controller to work, we need to keep its parameter values updated. Luckily Unity makes talking to animator controllers easy.
 ```csharp
 public class JumpControllerParameterProvider : MonoBehaviour
 {
@@ -87,6 +90,12 @@ public class JumpControllerParameterProvider : MonoBehaviour
 ```
 
 ### Sending messages
+In order for our jump controller to do anything, we need it to talk back to our player character scripts. Inheriting from `StateMachineBehaviour` allows us to add our script to any state in a state machine.
+
+![StateMachineBehaviour](./Documentation/SendMessage.png "TODO")
+
+To keep things simple, we'll use [Unity's SendMessage](https://docs.unity3d.com/ScriptReference/Component.SendMessage.html) system.
+
 ```csharp
 public class SendMessageState : StateMachineBehaviour
 {
@@ -105,6 +114,8 @@ public class SendMessageState : StateMachineBehaviour
 ```
 
 ### Handling messages
+Finally we need TODO
+
 ```csharp
 public class JumpControllerMessageHandler : MonoBehaviour
 {
