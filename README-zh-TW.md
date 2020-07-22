@@ -9,6 +9,7 @@
 ## 章節
 1. [拆解耦合](/Decoupling/README-zh-TW.md)
 2. [持續整合](/ContinuousIntegration/README-zh-TW.md)
+3. [狀態機](/StateMachines/README-zh-TW.md)
 
 ## Feedback form
 [Feedback form](https://docs.google.com/forms/d/e/1FAIpQLSd3JzkFGXOSWr9CyA7mSWUG8hzvDvHoThYw_CLs8pvduKAcNw/viewform)
