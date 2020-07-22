@@ -2,7 +2,7 @@
 
 需求會改變、專案會成長、軟體會演化。
 
-## 問題
+# 問題
 
 在系統的各模組間有高度耦合的狀況代表：
 - 難以把每個組件的內容隔離開來描述
@@ -13,17 +13,17 @@
 
 ![打結的毛線球](https://cdn.pixabay.com/photo/2016/06/28/10/49/thread-1484387_640.jpg "能解得開算你厲害。")
 
-## 解方
+# 解方
 
 我們必須讓組件盡量 [模組化](https://en.wikipedia.org/wiki/Modular_programming) 才能利於分別描述、測試與重複利用。模組化的組件能夠更容易的被修改或替換，讓我們的系統更具彈性，得以適應各種不同的需求修改。我們可以透過拆解耦合的相依組件，並定義最少介面的手段來達到模組化的目的。
 
 ![樂高磚塊](https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Lego_bricks.jpg/640px-Lego_bricks.jpg "以樂高為榜樣吧，朋友。")
 
-## 範例
+# 範例
 
 舉例來說，假設我們要開發一款類似 [《暗黑破壞神》](https://en.wikipedia.org/wiki/Diablo_(video_game)) 的遊戲，在其中我們有一個玩家角色，還有一個顯示玩家現有血量跟法力的介面。我們要怎麼把血條顯示跟玩家的血量值做聯結？這兩個組件分別附著在完全不同的遊戲物件上！
 
-### Singleton 模式
+## Singleton 模式
 
 我們很快發現到，整個遊戲裡只有一個玩家角色，也只有一個介面。那不就正好能用上 [Singleton 模式](https://en.wikipedia.org/wiki/Singleton_pattern) 來存取其他組件了嗎？[太巧妙了！](https://youtu.be/wv4eTE0aUiQ)
 
@@ -31,7 +31,7 @@
 public sealed class Player : MonoBehaviour
 {
     public static Player main { get; private set; }
-    
+
     public float maxHealth;
     public float health;
 
@@ -39,7 +39,7 @@ public sealed class Player : MonoBehaviour
     {
         main = this;
     }
-    
+
     // ...
 }
 ```
@@ -68,18 +68,18 @@ public sealed class HealthBar : MonoBehaviour
 
 還是別這樣做吧。如果我告訴你有個方法，讓每個組件都可以被隔離、模組化，而且還能和其他組件共享資訊呢？這就必須討論 [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) 了！
 
-### Dependency injection（常譯「相依性注入」）
+## Dependency injection（常譯「相依性注入」）
 
 讓我們來仔細看看 [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection)、[separation of concerns (SoC，常譯「關注點分離」)](https://en.wikipedia.org/wiki/Separation_of_concerns)，與 [inversion of control (IoC，常譯「控制反轉」)](https://en.wikipedia.org/wiki/Inversion_of_control) ，這些看起來都好像很高深、很複雜，然後可能還要下載額外的框架才能使用，還是得轉換到一個全新語言去比較快...（是嗎？）
 
-此處關鍵是意識到，其實 [Unity 裡的 Inspector](https://docs.unity3d.com/Manual/UsingTheInspector.html) *就是*一個 dependency injector（注入器）。事實上，我們已經使用了這個功能來注入相依組件。在 [前面範例](#singleton-模式) 的 `HealthBar` 當中對介面組件 `Slider` 的參考*就是*我們透過 Unity Inspector 來*注入*的相依性了。就跟指定一個欄位一樣簡單。很誇張嗎？但其實這差不多就是關於 dependency injection 你需要知道的全部了。
+此處關鍵是意識到，其實 [Unity 裡的 Inspector](https://docs.unity3d.com/Manual/UsingTheInspector.html) *就是* 一個 dependency injector（注入器）。事實上，我們已經使用了這個功能來注入相依組件。在 [前面範例](#singleton-模式) 的 `HealthBar` 當中對介面組件 `Slider` 的參考*就是*我們透過 Unity Inspector 來*注入*的相依性了。就跟指定一個欄位一樣簡單。很誇張嗎？但其實這差不多就是關於 dependency injection 你需要知道的全部了。
 
 ```csharp
 public sealed class Player : MonoBehaviour
 {
     public float maxHealth;
     public float health;
-    
+
     // 娘子快來看，沒有 singleton！
     // ...
 }
@@ -103,8 +103,8 @@ public sealed class HealthBar : MonoBehaviour
 
 好，所以我們把 singleton 模式換掉，改成使用注入的玩家組件參考，歡呼吧！不過...，我們到底從中獲得什麼好處了嗎？重新再來看一下我們原本遭遇的問題吧：
 
-- [x] 把每個組件的內容隔離開來描述 
-- [ ] 組件可以單獨進行測試 
+- [x] 把每個組件的內容隔離開來描述
+- [ ] 組件可以單獨進行測試
 - [ ] 重複利用組件
 
 其實真的還沒有多大改變。我們大概能在不去看 `Player` 定義的情況下，來猜測 `HealthBar` 到底在做什麼，但是我們還是無法開一個空場景，在不把 `Player` 也拉進來場景中的情況下去單獨測試它。我們也無法重複利用 `HealthBar` 的程式碼在 `ManaBar` 或其他類似的顯示上。我們得複製貼上一份相同的程式碼，然後把每個 `health` 字眼都替換成 `mana`。真令人失望。
@@ -113,7 +113,7 @@ public sealed class HealthBar : MonoBehaviour
 
 修蛋幾勒！
 
-### ScriptableObjects
+## ScriptableObjects
 
 今天要講的第二個關鍵是，我們可以不單純只注入指向其他組件的參考，也可以注入對 `ScriptableObject` 的參考。這是拿來 [存放資料，*且獨立於類別實體*的容器](https://docs.unity3d.com/Manual/class-ScriptableObject.html) 。難道說我們可以用它來存放玩家的血量值，而不用放在 `Player` 組件裡面嗎？答對了！現在馬上就來試試吧。
 
@@ -146,7 +146,7 @@ public sealed class Player : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private BoundedFloat health;
     [SerializeField] private BoundedFloat mana;
-    
+
     // ...
 }
 ```
@@ -159,8 +159,8 @@ public sealed class Player : MonoBehaviour
 
 這樣終於完成了嗎？讓我們再回顧一次問題點：
 
-- [x] 把每個組件的內容隔離開來描述 
-- [x] 組件可以單獨進行測試 
+- [x] 把每個組件的內容隔離開來描述
+- [x] 組件可以單獨進行測試
 - [x] 重複利用組件
 
 閱讀程式碼時，我們可以理解 `Player` 的行為，但不需要去管介面的 `StatusBar`，反之亦同。兩者之間不再存有相依性。我們可以把 `Player` 丟進一個空場景中，隨便指定一些 [測試用的血量與法力值](https://en.wikipedia.org/wiki/Mock_object) 就能執行場景，毫無問題。基礎型別資料（Plain Old Data, POD）非常容易複製。
@@ -169,13 +169,16 @@ public sealed class Player : MonoBehaviour
 
 我們還沒開始實作任何其他的遊戲組件，就已經開始在重複利用程式碼了。針對兩個數值條，我們只須使用一份程式，而且這個 `BoundedFloat` 大概之後在很多類似數值需求的場合有機會派上用場。
 
-## 重構（Refactoring）
+# 重構（Refactoring）
 
-Dependency injection 
-最美好的一個地方是，我們也可以把它用於既有專案上，並不需要從頭開始重寫。我們可以亦步亦趨把每個組件慢慢切出來，並將相依資料移到 
+Dependency injection
+最美好的一個地方是，我們也可以把它用於既有專案上，並不需要從頭開始重寫。我們可以亦步亦趨把每個組件慢慢切出來，並將相依資料移到
 `ScriptableObject` 裡面，讓組件之間的直接聯結變成對資料的參考。一旦把一個組件完全解除耦合之後，我們就能輕易地單獨針對它做測試跟重構。
 
-## 延伸閱讀
+# 延伸閱讀
 
 - [Unite Austin 2017 - Game Architecture with Scriptable Objects](https://youtu.be/raQ3iHhE_Kk) by [@roboryantron](https://github.com/roboryantron)
 - [Unite 2016 - Overthrowing the MonoBehaviour Tyranny in a Glorious Scriptable Object Revolution](https://youtu.be/6vmRwLYWNRo) by [@richard-fine](https://github.com/richard-fine)
+
+# 翻譯
+如果你覺得這個工作坊有其價值，並通曉另一個語言，我們非常歡迎任何幫助工作坊內容進行翻譯的協助。把本儲存庫內容 clone 下來後，增加一份特定語言在地化的 README.md，例如 README-pt-BR.md，並送 PR 給我們。

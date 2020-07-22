@@ -1,7 +1,7 @@
 # Continuous Integration
 Keep testing. Keep shipping. Catch bugs early.
 
-## Problem
+# Problem
 Game assets tend to have lots of dependencies across various disciplines. Projects can easily break when people change things without realizing which other things depend on them. The longer it takes to notice the problem, the longer it takes to identify and fix the change that caused it.
 
 Furthermore, at any given time there's a slightly different work-in-progress version of the project on each developer's machine, making it difficult to reproduce issues seen on another machine. Some issues might even manifest only on the target platform.
@@ -12,7 +12,7 @@ It works on
 my machine.
 ```
 
-## Solution
+# Solution
 We want to reduce the time between making a change and seeing it on the target platform as much as possible. We want to have checks that tell us when something broke. We want to run those checks after every change. That means we have to automate the entire process.
 
 We achieve continuous integration and delivery by
@@ -51,21 +51,32 @@ In [our pipeline script](BuildScripts/Jenkins/Jenkinsfile), we
 5. upload the build.
 
 ```groovy
-    stage('Import Assets') {
-      steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -quit -accept-apiupdate"
-      }
+  environment {
+    GIT = '"C:\\Program Files\\Git\\bin\\git.exe"'
+    UNITY = '"C:\\Program Files\\Unity\\Hub\\Editor\\2018.4.14f1\\Editor\\Unity.exe"'
+    PROJECT = 'ContinuousIntegration'
+    PLATFORM = 'Win64'
+    OUTPUT = 'Build/ContinuousIntegration.exe'
+    STEAMCMD = '"W:\\Jenkins\\steamworks\\tools\\ContentBuilder\\builder\\steamcmd.exe"'
+    STEAMUSERNAME = 'steam_username_here'
+    STEAMPASSWORD = 'steam_password_here'
+    STEAMSCRIPT = '"ContinuousIntegration\\BuildScripts\\Steam\\app_build.vdf"'
+  }
+  stage('Import Assets') {
+    steps {
+      bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -quit -accept-apiupdate"
     }
-    stage('Run Unit Tests') {
-      steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -runEditorTests"
-      }
+  }
+  stage('Run Unit Tests') {
+    steps {
+      bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -runEditorTests"
     }
-    stage('Build') {
-      steps {
-        bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -quit -buildWindows64Player $OUTPUT"
-      }
+  }
+  stage('Build') {
+    steps {
+      bat "$UNITY -batchmode -logFile - -projectPath $PROJECT -buildTarget $PLATFORM -quit -buildWindows64Player $OUTPUT"
     }
+  }
 ```
 
 ## Automatic the testing process
@@ -104,13 +115,13 @@ The good news is that [uploading builds to Steam](https://partner.steamgames.com
 
 Steam keeps all uploaded builds around *forever*, which is super useful when something goes wrong and we have to revert to an earlier build. On the other hand, we don't really want to risk breaking the game every day. So let's make sure to automatically upload our builds to a *beta* branch on Steam, by configuring the `setlive` field in the `app_build.vdf`. That way our players can opt in to play the latest ~~and greatest~~ builds if they feel brave. Every few weeks, when the build is stable enough, we can release it to the default branch using Steam's backend.
 
-## Further reading
+# Further reading
 - [Continuous Integration](https://martinfowler.com/articles/continuousIntegration.html) by Martin Fowler
 - [Continuous integration and automated testing](http://itmattersgames.com/2019/02/18/continuous-integration-and-automated-testing/) by Michele Krüger
 - [Unite 2015 - Continuous Integration with Unity](https://www.youtube.com/watch?v=kSXomLkMR68) by Jonathan Peppers
 - [Setting Up a Build Server for Unity with Jenkins](https://www.youtube.com/watch?v=4J3SmhGxO1Y) by William Chyr
 
-## Translations
+# Translations
 
 - [台灣繁體中文 (zh-TW)](README-zh-TW.md)
 

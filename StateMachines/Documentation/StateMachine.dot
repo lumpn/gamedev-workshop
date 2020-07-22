@@ -1,0 +1,17 @@
+digraph G {
+
+edge [dir=both]
+MovingForward [label="Moving\nForward"];
+MovingBackward [label="Moving\nBackward"];
+JumpingHoldingUp [label="Jumping\n(Holding Up)"]
+
+JumpingHoldingUp -> Jumping;
+Jumping -> Standing;
+Standing -> MovingBackward;
+Standing -> Ducking;
+Standing -> MovingForward;
+
+{rank=same;MovingForward;MovingBackward;Ducking}
+MovingBackward->Ducking->MovingForward [style=invis];
+
+}
