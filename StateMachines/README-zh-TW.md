@@ -1,14 +1,14 @@
-# State Machines
-Avoid spaghetti code. Everything is a state machine. Decouple state from logic.
+# 為何使用「狀態機」
+避免程式碼義大利麵化。所有事物都可視為一種狀態機，並避免狀態與邏輯的耦合。
 
-# Problem
-An object should change its behavior when its internal state changes. That sounds very abstract, but it's a very common pattern in game code. Let's look at some examples.
+# 問題
+當一個物件的內在狀態改變時，行為也會跟著改變。聽起來很抽象，但是這是在遊戲程式中非常常見的案例。考量以下狀況：
 
-1. Input handling: In a fighting game, pressing the *Punch* button should throw a different punch depending on whether the player is moving forward, backward, standing still, jumping, or ducking.
-2. AI characters: Bots should react differently when spotting the player depending on their current health, weapons, and number of other bots nearby.
-3. Game controller: Whether the ability to quit, pause, or save a game is available should depend on whether the game is loading, saving, paused, running, or quitting,
+1. 輸入判定：在格鬥遊戲中，按下 *P鍵* 出拳，往往會依照角色目前正在前進、後退、直立、跳躍或蹲下等不同狀態，而出不同的拳。
+2. 電腦操縱角色：機器人角色在看到玩家角色時，應該要考量角色的目前血量、武器種類、同伴數量等條件來做出不同的反應。
+3. 遊戲流程控制：退出、暫停或儲存遊戲等功能的可執行與否，應該要依照目前遊戲是否正在載入、儲存、已經暫停、正在退出等狀態來決定。
 
-What's common about these systems is that they tend to be full of special cases. Implementing the logic to handle each special case quickly turns our solution into spaghetti code.
+上述這些常見情境的共通點，就是它們往往充滿各式各樣的特例。為了要實作相關邏輯來對應各種特例，你的程式碼很快就變成義大利麵了。
 
 ```csharp
 if (Input.GetButton("Punch")) {
@@ -30,23 +30,23 @@ if (Input.GetButton("Punch")) {
 }
 ```
 
-At this point our game designer tells us pressing the *Punch* immediately after standing up after ducking for two seconds should throw a dragon uppercut. Oh and double-tapping *Punch* in air while rising should throw a fireball.
+當你才剛寫完上述程式碼，遊戲企劃又突然冒出對你說，在蹲下兩秒集氣後起身瞬間按下 *P鍵* 要可以使出必殺技「升龍臂」哦！還有還有，在跳躍滯空高度上升期間，連按 *P鍵* 兩下要可以丟出火球。
 
 ```
 (╯°□°）╯︵ ┻━┻
 ```
 
-# Solution
-Special cases are the same as states. Every branch in your code represents a different state. Draw them on a piece of paper and connect them with arrows representing the state changes. Once you get more familiar with the pattern, you will start seeing it everywhere.
+# 解決方案
+實際上，各種特例跟「狀態」是等價的。你程式碼中的每個條件分支，都是一個不同的狀態。在紙上先用筆把各種狀態畫下來，並用箭頭連接來代表狀態的改變。當你開始熟悉這樣的操作模式後，就會發現這種結構無所不在。
 
-![State machine](./Documentation/StateMachine.png "Where have I seen this before?")
+![狀態機範例圖](./Documentation/StateMachine.png "我在哪裡看過類似的結構？")
 
-The hard part is making sure all the state changes are in the right place and getting triggered correctly, but that's independent from implementing what the *Punch* button is doing in each state. We're decoupling the state handling from the action handling, which allows us to reason about each of them in isolation.
+困難的地方在於，如何保證所有的狀態改變，都透過正確的條件、在正確的時機被觸發。但這件事跟實作 *P鍵* 要在各個狀態下執行什麼東西，是可以各自獨立的。我們切斷處理狀態改變部分，與執行行動部分的耦合，那就更容易在更乾淨的情境下來各別檢視他們。
 
-Okay, so now that we know the *shape* of the problem, how do we implement it?
+現在我們知道問題的輪廓了，但要怎麼實作出來？
 
 ## Animators
-The graph above looks a lot like an [animator controller](https://docs.unity3d.com/Manual/Animator.html) in Unity. And, in fact, that's exactly what we are going to use, because it turns out that an animator controller can do so much more than playing animations. Let's walk through an example to see how it works.
+上面那張圖，其實很像 [Unity 的 Animator 動畫控制系統](https://docs.unity3d.com/Manual/Animator.html)。而實際上，這就是我們現在要利用的，因為 Animator 動畫控制器實際上能做到的事情遠遠不只單純播放動畫而已。讓我們來看看實例上怎麼運用吧。
 
 # Example
 Suppose we are implementing input handling for a Jump 'n' Run platforming game. We want to support [genre staples](https://celestegame.fandom.com/wiki/Moves) like
