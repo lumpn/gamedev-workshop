@@ -129,8 +129,8 @@ public class JumpControllerMessageHandler : MonoBehaviour
     {
         if (startJump)
         {
-            // apply enough force to cancel out any downward momentum
-            // the player might have and launch the player into the air.
+            // 產生向上的力道來抵銷玩家角色任何向下的動量
+            // 以讓玩家角色向上跳躍
             var downVelocity = Mathf.Min(rigidbody.velocity.y, 0);
             var deltaVelocity = new Vector3(0, jumpVelocity - downVelocity, 0);
             rigidbody.AddForce(deltaVelocity, ForceMode.VelocityChange);
@@ -138,7 +138,7 @@ public class JumpControllerMessageHandler : MonoBehaviour
         }
         if (stopJump)
         {
-            // apply just enough force to cancel any upward momentum.
+            // 產生剛好的力道來抵銷上升的動量
             var upVelocity = Mathf.Max(rigidbody.velocity.y, 0);
             var deltaVelocity = new Vector3(0, -upVelocity, 0);
             rigidbody.AddForce(deltaVelocity, ForceMode.VelocityChange);
