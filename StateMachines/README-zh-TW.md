@@ -43,34 +43,34 @@ if (Input.GetButton("Punch")) {
 
 困難的地方在於，如何保證所有的狀態改變，都透過正確的條件、在正確的時機被觸發。但這件事跟實作 *P鍵* 要在各個狀態下執行什麼東西，是可以各自獨立的。我們切斷處理狀態改變部分，與執行行動部分的耦合，那就更容易在更乾淨的情境下來各別檢視他們。
 
-現在我們知道問題的輪廓了，但要怎麼實作出來？
+現在我們知道問題的*輪廓*了，但要怎麼實作出來？
 
 ## Animators
-上面那張圖，其實很像 [Unity 的 Animator 動畫控制系統](https://docs.unity3d.com/Manual/Animator.html)。而實際上，這就是我們現在要利用的，因為 Animator 動畫控制器實際上能做到的事情遠遠不只單純播放動畫而已。讓我們來看看實例上怎麼運用吧。
+上面那張圖，其實很像 [Unity 的 Animator 動畫控制系統](https://docs.unity3d.com/Manual/Animator.html)。而實際上，這就是我們現在要利用的，因為 Unity Animator 動畫控制器實際上能做到的事情遠遠不只單純播放動畫而已。讓我們來看看實例上怎麼運用吧。
 
-# Example
-Suppose we are implementing input handling for a Jump 'n' Run platforming game. We want to support [genre staples](https://celestegame.fandom.com/wiki/Moves) like
-1. variable jump height that depends on how long the player holds the *Jump* button,
-2. [coyote time](https://twitter.com/DavesInHisPants/status/1281189584462917632) which allows the player to jump after running off an edge, and
-3. double jump, a second jump while in mid air.
+# 範例
+假設我們要實作一個 platformer 遊戲的輸入處理系統。我們希望支援這類遊戲的[常見操作](https://celestegame.fandom.com/wiki/Moves)，如：
+1. 依據玩家按壓 *跳躍鍵* 的時間長短來決定跳躍高度。
+2. 讓玩家角色在跑步離開平台地板後，有短暫的[起跳容錯時間](https://twitter.com/DavesInHisPants/status/1281189584462917632)。
+3. 在空中能多跳一次的兩段跳能力。
 
-## Jump controller
-![Jump controller](./Documentation/JumpController.png "Jump around!")
+## 跳躍控制器
+![跳躍控制器範例圖](./Documentation/JumpController.png "跳躍吧時空少女！")
 
-We start by creating a new animator controller. Our boolean input parameters are whether the *Jump* button is pressed and whether the player is currently on the ground.
+一開始我們先建立一個新的動畫控制器。帶入的兩個布林值參數代表 *跳躍鍵* 是否正被按住（JumpButton），以及玩家角色目前是否腳踏實地（OnGround）。
 
-Our first state is `On Ground`. That is when the player is able to jump at all. We also need the opposite state, which is `Falling`, and then a few more states which become clearer when we look at the conditions for the state transitions.
+我們狀態機中的第一個狀態，是 `On Ground`，只有在這狀態下玩家才能進行跳躍。我們還需要一個相對的狀態 `Falling`，以及在後面談到「狀態轉換」時會用到的其他幾個狀態。
 
-![Jump controller with transition conditions](./Documentation/JumpController2.png "Spot the bug?")
+![跳躍控制器加上狀態轉換條件的範例圖](./Documentation/JumpController2.png "這邊有個臭蟲，有注意到嗎？")
 
-Let's look at the `On Ground` state. When the player presses the *Jump* button we start a jump. When the player releases the *Jump* button, we stop the jump by running some game logic to make sure the player character doesn't rise much higher anymore. We then immediately transition to the `Falling` state and we keep falling until the player character touches ground again.
+先來看看 `On Ground` 狀態吧。當玩家按下 *跳躍鍵* 時，我們會開始一個跳躍的動作。當玩家放開 *跳躍鍵* 時，我們會依照一些遊戲邏輯設定來停止跳躍，讓玩家不會再上升太多高度。然後就會馬上轉換到 `Falling` 狀態，並不斷降落，直到玩家角色再次腳踏實地為止。
 
-If we transitioned back to `On Ground` straight from `Falling` as soon as the player touches ground, we would end up in a situation where the player would keep bouncing up and down like on a trampoline simply by keeping the *Jump* button pressed, because our state machine would immediately transition back to `Start Jump`. To fix that, we have to add an intermediary state `On Ground (still holding Jump)`.
+如果玩家落下瞬間，我們就馬上再從 `Falling` 轉換到 `On Ground` 狀態的話，便會發生玩家只要按住 *跳躍鍵*，就能像在彈簧墊上一樣不斷上下連續彈跳的情況，因為狀態機又會立刻轉換到 `Start Jump` 狀態。要把這個問題修掉，就得加入像 `On Ground (still holding Jump)` 這樣的中間狀態。
 
-Wow, jumping is hard. There is a lot of logic in our state machine already and we have only covered the basic variable jump height so far. We can see how this would have been a lot of spaghetti code already.
+真沒想到，光處理跳躍就頗難的。我們的狀態機目前為止已經出現了不少邏輯，但也只能對應「可變跳躍高度」這項基本要素而已。可以想見這有多容易會產生義大利麵程式碼。
 
-### Providing parameters
-For our jump controller to work, we need to keep its parameter values updated. Luckily Unity makes talking to animator controllers easy.
+### 提供參數
+要使我們的跳躍控制器能作動，還需要不斷傳入更新的參數值才行。幸好跟 Unity 動畫控制器的溝通還算簡單。
 ```csharp
 public class JumpControllerParameterProvider : MonoBehaviour
 {
@@ -90,12 +90,12 @@ public class JumpControllerParameterProvider : MonoBehaviour
 }  
 ```
 
-### Sending messages
-In order for our jump controller to do anything, we need it to talk back to our player character scripts. Inheriting from `StateMachineBehaviour` allows us to add our script to any state in a state machine.
+### 傳送訊息
+要讓這個跳躍控制器能真的對遊戲本體產生影響，我們得讓它可以和玩家角色相關程式溝通。可以透過繼承 `StateMachineBehaviour` 類別，來讓下面這段程式得以被加到狀態機中的任意狀態上。
 
 ![StateMachineBehaviour](./Documentation/SendMessage.png "TODO")
 
-To keep things simple, we'll use [Unity's SendMessage](https://docs.unity3d.com/ScriptReference/Component.SendMessage.html) system.
+為了簡單起見，這邊我們使用 [Unity 的 SendMessage](https://docs.unity3d.com/ScriptReference/Component.SendMessage.html) 系統。
 
 ```csharp
 public class SendMessageState : StateMachineBehaviour
@@ -114,8 +114,8 @@ public class SendMessageState : StateMachineBehaviour
 }
 ```
 
-### Handling messages
-Finally we need a script to receive the messages sent by the animator controller and apply the appropriate game logic, in this case physics.
+### 處理訊息
+最後，我們需要另一段程式來接收動畫控制器所送的訊息，並帶入合適的遊戲邏輯。在目前的範例中，我們需要處理的是簡單的物理行為。
 
 ```csharp
 public class JumpControllerMessageHandler : MonoBehaviour
@@ -148,25 +148,25 @@ public class JumpControllerMessageHandler : MonoBehaviour
 }
 ```
 
-## Coyote time
-Fortunately, laying the groundworks was the hard part already. Adding [coyote time](https://celestegame.fandom.com/wiki/Moves#Coyote_Time) is simply a matter of adding one more state with a very short timeout of 50 milliseconds. Even though the player character is not technically on ground anymore, we still allow them to perform a jump for a few frames. [Game feel](https://youtu.be/OfSpBoA6TWw?t=833)!
+## 起跳容錯時間
+幸運的是，把前面的架構建立起來就已經是最困難的部分了。要將[起跳容錯時間](https://celestegame.fandom.com/wiki/Moves#Coyote_Time)特性加入，只是很單純地新增一個狀態，並給予它非常短暫的 50 毫秒時限。這樣一來，就算玩家角色已經不是腳踏實地狀態，玩家還是可以在數個畫格時間內執行跳躍動作。這就是現在遊戲設計上常講的 [Game Feel](https://youtu.be/OfSpBoA6TWw?t=833)。
 
-![Coyote time](./Documentation/CoyoteTime.png "Meep meep!")
+![起跳容錯時間](./Documentation/CoyoteTime.png "衝衝衝！")
 
-Perhaps most surprisingly, we don't need to touch any code at all. Everything happens still happens in `Start Jump` and `Stop Jump` just like before. It just works.
+最令人意外的地方大概是，我們根本不需要為此修改任何程式碼。所有在 `Start Jump` 與 `Stop Jump` 狀態時該發生的事，還是照常運作。
 
-## Double jump
-Double jumping means we give the player a second jump when falling. How does the second jump work? Just like the first jump. So let's copy the relevant states, put them to the right of `Falling`, and connect them up. The *shape* of the problem stays the same.
+## 兩段跳
+兩段跳就是指我們在玩家下墜過程中，給予第二次跳躍的能力。這個第二次跳躍到底該怎麼運作？其實就跟第一次跳躍差不多。所以我們可以把幾個有關的狀態複製一份，然後加在 `Falling` 狀態的右邊，然後把它們連起來就好了。整體問題的*輪廓*仍然保持一樣。
 
-All we have to do to make it work is making sure that the *Jump* button is not being held before we do the second jump, because otherwise we would have the same trampoline problem we had in the very beginning. And just like before, we solve it by adding an intermediary state `Falling (still holding Jump)`.
+在這邊我們需要顧慮的就只是，確保在我們執行第二次跳躍之前，*跳躍鍵* 已經是在放開的狀態，要不然類似前面講到的彈簧墊狀況又會出現。而又跟之前一樣的，解決方法就是加入一個 `Falling (still holding Jump)` 這樣的中間狀態。
 
-![Double jump](./Documentation/DoubleJump.png "If at first you don't succeed, jump again.")
+![兩段跳範例圖](./Documentation/DoubleJump.png "你跳一次不夠，那你有跳兩次嗎。")
 
-In terms of code, again, we don't have to do anything at all. It just works.
+從程式碼的角度來看，再一次地，我們什麼都不用改，一切照常運作。
 
-Now we can really see the benefit of decoupling the state handling logic from the jump physics implementation. The state machine was the hard part. And that's good, because we use an animator controller to represent our state machine and animator controllers are super easy to debug. Press play and Unity shows you exactly which state is currently active. Compare that to what you see in game and you will spot the bug immediately.
+現在我們可以真的體會到，將「狀態處理」與「跳躍物理實作」兩者耦合解開後的好處了。建立狀態機的結構是困難的部分，但好消息是，因為我們使用 Unity 動畫控制器來呈現狀態機，而動畫控制器非常容易除錯。只要按下播放鍵，Unity 就會顯示目前處於哪個狀態，然後跟遊戲內你看到的狀況一比較，通常馬上就可以看出錯誤出在哪裡。
 
-## References
+## 參考資料
 
 - [Don’t Re-invent Finite State Machines: How to Repurpose Unity’s Animator](https://medium.com/the-unity-developers-handbook/dont-re-invent-finite-state-machines-how-to-repurpose-unity-s-animator-7c6c421e5785) by Darren Tsung
 - [Unite 2015 - Applied Mecanim : Character Animation and Combat State Machines](https://www.youtube.com/watch?v=Is9C4i4XyXk) by Aaron Horne
@@ -174,7 +174,7 @@ Now we can really see the benefit of decoupling the state handling logic from th
 - [Game Programming Patterns - State](http://gameprogrammingpatterns.com/state.html) by Bob Nystrom
 - [Tips and Tricks for good platforming games](http://www.davetech.co.uk/gamedevplatformer) by David Strachan
 
-# Translations
+# 翻譯
 - [台灣繁體中文 (zh-TW)](README-zh-TW.md)
 
-If you find this workshop useful and speak another language, I'd very much appreciate any help translating the chapters. Clone the repository, add a localized copy of the README.md, for example README-pt-BR.md, and send me a pull request.
+如果你覺得這個工作坊有其價值，並通曉另一個語言，我們非常歡迎任何幫助工作坊內容進行翻譯的協助。把本儲存庫內容 clone 下來後，增加一份特定語言在地化的 README.md，例如 README-pt-BR.md，並送 PR 給我們。
