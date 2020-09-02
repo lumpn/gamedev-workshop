@@ -7,9 +7,9 @@ The goal of this game development tech workshop is to help programmers learn, gr
 The organizers of the workshop are [Jonas Bötel](https://twitter.com/codelumpn) and [Johnson Lin](https://twitter.com/igdshare). The workshop will be held in both English and Traditional Chinese simultaneously.
 
 ## Chapters
-1. [Decoupling](/Decoupling/)
-2. [Continuous Integration](/ContinuousIntegration/)
-3. [State Machines](/StateMachines/)
+1. [Decoupling](./Decoupling/)
+2. [Continuous Integration](./ContinuousIntegration/)
+3. [State Machines](./StateMachines/)
 
 ## Feedback form
 [Feedback form](https://docs.google.com/forms/d/e/1FAIpQLSf6zky6QtlwzFEXGlWpW-WGGYXcCrcWLTk7e5Q2eeODSU_JiQ/viewform)
