@@ -5,9 +5,11 @@ An attempt to list what works well and what doesn't. Mostly scars.
 ```csharp
 #if UNITY_PS4
 ```
+
 ```csharp
 if (Application.isConsolePlatform)
 ```
+
 Avoid platform specific code. If you absolutely must have platform specific code, because you need call APIs only available on that platform, build a platform abstraction layer. Chances are other platforms will have a very similar feature under a slightly different API. Aim to expose a unified cross platform API that hides all the platform specific calls away. Use `asmdef`s instead of preprocessor directives.
 
 # Editor only code
