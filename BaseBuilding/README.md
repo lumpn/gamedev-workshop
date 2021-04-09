@@ -10,8 +10,8 @@ The user is able to construct, deconstruct, enter, and walk around inside bases.
 
 ## Building blocks
 The user can choose between two basic building blocks.
-- Room with four doors, one on each side.
-- Straight corridor with two doors, one on each end.
+- Room with a door on each side
+- Corridor with a door on each end
 
 ## Construction process
 The user can place building blocks on the ground or attach them to an existing base. Pieces snap together when they connect. Connecting one piece to another removes any doors between them.
