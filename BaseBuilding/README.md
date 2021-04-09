@@ -1,5 +1,5 @@
 # Base building
-Create a first person or third person base building prototype in Unity.
+Create a base building prototype in Unity.
 
 Users should be able to build a base from rooms and corridors in a variety of layouts. Have a look at [base building in Subnautica](https://www.youtube.com/watch?v=Q-oa3bzir9A) as well as [base building in No Man's Sky](https://www.youtube.com/watch?v=hpsSJrh5WzY&t=165) for inspiration.
 
