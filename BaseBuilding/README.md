@@ -1,9 +1,9 @@
-# Base building
+# Base building challenge
 Create a base building prototype in Unity.
 
 Users should be able to build a base from rooms and corridors in a variety of layouts. Have a look at [base building in Subnautica](https://www.youtube.com/watch?v=Q-oa3bzir9A) as well as [base building in No Man's Sky](https://www.youtube.com/watch?v=hpsSJrh5WzY&t=165) for inspiration.
 
-The problem is open-ended by design. There is no right or wrong approach. Feel free to make technical and creative decisions that feel right to you.
+The problem is open-ended by design. There is no right or wrong approach. Feel free to make technical and creative decisions that suit you.
 
 ## Gameplay
 The user is able to construct, deconstruct, enter, and walk around inside bases.

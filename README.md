@@ -12,7 +12,7 @@ The organizers of the workshop are [Jonas Bötel](https://twitter.com/codelumpn)
 
 If there is a particular topic that you would like me to address, please use the [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSf6zky6QtlwzFEXGlWpW-WGGYXcCrcWLTk7e5Q2eeODSU_JiQ/viewform) to let me know.
 
-## Code reviews
+## Challenges
 1. [Game Maker](./GameMaker/)
 2. [Base Building](./BaseBuilding/)
 

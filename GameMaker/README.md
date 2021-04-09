@@ -1,9 +1,9 @@
-# Game maker
+# Game maker challenge
 Create a Unity prototype where users can create and play their own games.
 
 In _Create_ mode users can create entity prefabs and place instances of them in the scene. In _Play_ mode users can play the created scene and interact with the placed entities.
 
-The problem is open-ended by design. There is no right or wrong approach. Feel free to make technical and creative decisions that feel right to you.
+The problem is open-ended by design. There is no right or wrong approach. Feel free to make technical and creative decisions that suit you.
 
 ## Create mode
 The user can choose between two types of entities.
