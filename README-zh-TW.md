@@ -7,8 +7,9 @@
 本工作坊由 [Jonas Bötel](https://twitter.com/codelumpn) 發起，並由 [IGDShare 的 Johnson Lin](https://twitter.com/igdshare) 協助中文翻譯。
 
 ## 章節
-1. [拆解耦合](/Decoupling/README-zh-TW.md)
-2. [持續整合](/ContinuousIntegration/README-zh-TW.md)
+1. [拆解耦合](./Decoupling/README-zh-TW.md)
+2. [持續整合](./ContinuousIntegration/README-zh-TW.md)
+3. [狀態機](./StateMachines/README-zh-TW.md)
 
 ## Feedback form
 [Feedback form](https://docs.google.com/forms/d/e/1FAIpQLSd3JzkFGXOSWr9CyA7mSWUG8hzvDvHoThYw_CLs8pvduKAcNw/viewform)
