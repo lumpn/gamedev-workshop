@@ -11,6 +11,12 @@
 2. [持續整合](./ContinuousIntegration/README-zh-TW.md)
 3. [狀態機](./StateMachines/README-zh-TW.md)
 
+## 挑戰題目
+1. [遊戲編輯器實作](./GameMaker/README-zh-TW.md)
+2. [基地建造系統實作](./BaseBuilding/README-zh-TW.md)
+
+如果你想到有趣的程式挑戰，而且難度與大小適中（大到可以凸顯出有趣的工程決策，但可以在大約一小時內看完程式碼），歡迎把你的想法告訴我，我會再加到列表上。
+
 ## Feedback form
 [Feedback form](https://docs.google.com/forms/d/e/1FAIpQLSd3JzkFGXOSWr9CyA7mSWUG8hzvDvHoThYw_CLs8pvduKAcNw/viewform)
 
