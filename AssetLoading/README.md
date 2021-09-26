@@ -120,6 +120,7 @@ You don't have those. Just update the app including the content.
 
 ## Patching
 500MB patch limit on Switch.
+Asset packing.
 Incremental AssetBundles.
 Incremental Addressables.
 
