@@ -93,6 +93,12 @@ Reference counting.
 Group unloading.
 Addressables profiler.
 
+# Analysis
+Scenes easiest.
+Resources easy. Does not scale.
+AssetBundles must die.
+Addressables finicky.
+
 # Use cases
 
 ## No dynamic content
