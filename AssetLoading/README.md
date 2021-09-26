@@ -116,6 +116,7 @@ Careful with those handles.
 Careful with packing.
 
 ## Content updates
+Hosted asset bundles. Smaller app size. Frequent content updates.
 You don't have those. Just update the app including the content.
 
 ## Patching
