@@ -118,6 +118,11 @@ Careful with packing.
 ## Content updates
 You don't have those. Just update the app including the content.
 
+## Patching
+500MB patch limit on Switch.
+Incremental AssetBundles.
+Incremental Addressables.
+
 # Further reading
 
 # Translations
